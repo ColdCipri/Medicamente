@@ -15,6 +15,7 @@ namespace Medicamente
     public partial class Form1 : Form
     {
         string imgLocation = "";
+        DataTable dataTable = new DataTable();
 
         public Form1()
         {
@@ -33,14 +34,14 @@ namespace Medicamente
             SqlConn.dataSet = new DataSet();
             SqlConn.bindingSource = new BindingSource();
             SqlConn.dataAdapter.Fill(SqlConn.dataSet, "Medicamente");
-            
+
 
             foreach (DataRow r in SqlConn.dataSet.Tables["Medicamente"].Rows)
             {
                 listBox1.Items.Add(r["Nume"].ToString());
-
             }
             listBox1.ValueMember = "Id";
+            
 
             SqlConn.bindingSource.DataSource = SqlConn.dataSet.Tables["Medicamente"];
 
@@ -249,6 +250,38 @@ namespace Medicamente
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             SqlConn.CloseConn();
+        }
+
+        private void Filtru_textBox_TextChanged(object sender, EventArgs e)
+        {
+            if (Filtru_textBox.Text.ToString().Equals(""))
+            {
+
+                listBox1.DataSource = null;
+                listBox1.Items.Clear();
+
+                foreach (DataRow r in SqlConn.dataSet.Tables["Medicamente"].Rows)
+                {
+                    listBox1.Items.Add(r["Nume"].ToString());
+
+                }
+                listBox1.ValueMember = "Id";
+            }
+            else
+            {
+                listBox1.DataSource = null;
+                listBox1.Items.Clear();
+
+                string query = "SELECT * FROM Medicamente WHERE Nume LIKE '" + Filtru_textBox.Text + "%'";
+
+                DataTable table = new DataTable();
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(query, SqlConn.connection);
+
+                dataAdapter.Fill(table);
+                listBox1.DataSource = table;
+                listBox1.DisplayMember = "Nume";
+            }
+
         }
     }   
 }

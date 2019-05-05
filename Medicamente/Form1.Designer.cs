@@ -30,6 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             this.medicament_Group = new System.Windows.Forms.GroupBox();
+            this.Filtru_label = new System.Windows.Forms.Label();
+            this.Filtru_textBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.comboBox = new System.Windows.Forms.ComboBox();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Data_label = new System.Windows.Forms.Label();
             this.Bucati_label = new System.Windows.Forms.Label();
@@ -40,6 +45,9 @@
             this.Id_textBox = new System.Windows.Forms.TextBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.Tip_label_Upgrade = new System.Windows.Forms.Label();
+            this.comboBox_Upgrade = new System.Windows.Forms.ComboBox();
+            this.Upgrade_dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.pictureBox_Add = new System.Windows.Forms.PictureBox();
             this.Restart_button = new System.Windows.Forms.Button();
             this.Upgrade_button = new System.Windows.Forms.Button();
@@ -51,15 +59,9 @@
             this.Nume_label_Upgrade = new System.Windows.Forms.Label();
             this.Bucati_textbox_Upgrade = new System.Windows.Forms.TextBox();
             this.Nume_textBox_Upgrade = new System.Windows.Forms.TextBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.Upgrade_dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.comboBox_Upgrade = new System.Windows.Forms.ComboBox();
-            this.Tip_label_Upgrade = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.comboBox = new System.Windows.Forms.ComboBox();
             this.medicament_Group.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -69,6 +71,8 @@
             // 
             // medicament_Group
             // 
+            this.medicament_Group.Controls.Add(this.Filtru_label);
+            this.medicament_Group.Controls.Add(this.Filtru_textBox);
             this.medicament_Group.Controls.Add(this.label1);
             this.medicament_Group.Controls.Add(this.comboBox);
             this.medicament_Group.Controls.Add(this.dateTimePicker1);
@@ -87,6 +91,55 @@
             this.medicament_Group.TabIndex = 0;
             this.medicament_Group.TabStop = false;
             this.medicament_Group.Text = "Medicament";
+            // 
+            // Filtru_label
+            // 
+            this.Filtru_label.AutoSize = true;
+            this.Filtru_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Filtru_label.Location = new System.Drawing.Point(10, 444);
+            this.Filtru_label.Name = "Filtru_label";
+            this.Filtru_label.Size = new System.Drawing.Size(87, 32);
+            this.Filtru_label.TabIndex = 47;
+            this.Filtru_label.Text = "Filtru:";
+            // 
+            // Filtru_textBox
+            // 
+            this.Filtru_textBox.Location = new System.Drawing.Point(103, 451);
+            this.Filtru_textBox.Name = "Filtru_textBox";
+            this.Filtru_textBox.Size = new System.Drawing.Size(193, 22);
+            this.Filtru_textBox.TabIndex = 46;
+            this.Filtru_textBox.TextChanged += new System.EventHandler(this.Filtru_textBox_TextChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(732, 163);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(63, 32);
+            this.label1.TabIndex = 45;
+            this.label1.Text = "Tip:";
+            // 
+            // comboBox
+            // 
+            this.comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox.FormattingEnabled = true;
+            this.comboBox.Items.AddRange(new object[] {
+            "Pastila",
+            "Crema",
+            "Ceai",
+            "Spray"});
+            this.comboBox.Location = new System.Drawing.Point(801, 169);
+            this.comboBox.Name = "comboBox";
+            this.comboBox.Size = new System.Drawing.Size(105, 24);
+            this.comboBox.TabIndex = 44;
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(544, 171);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(163, 22);
+            this.dateTimePicker1.TabIndex = 22;
             // 
             // pictureBox1
             // 
@@ -164,7 +217,7 @@
             this.listBox1.ItemHeight = 16;
             this.listBox1.Location = new System.Drawing.Point(16, 20);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(280, 436);
+            this.listBox1.Size = new System.Drawing.Size(280, 420);
             this.listBox1.TabIndex = 0;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
@@ -190,6 +243,37 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Upgrade";
+            // 
+            // Tip_label_Upgrade
+            // 
+            this.Tip_label_Upgrade.AutoSize = true;
+            this.Tip_label_Upgrade.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Tip_label_Upgrade.Location = new System.Drawing.Point(693, 75);
+            this.Tip_label_Upgrade.Name = "Tip_label_Upgrade";
+            this.Tip_label_Upgrade.Size = new System.Drawing.Size(63, 32);
+            this.Tip_label_Upgrade.TabIndex = 43;
+            this.Tip_label_Upgrade.Text = "Tip:";
+            // 
+            // comboBox_Upgrade
+            // 
+            this.comboBox_Upgrade.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_Upgrade.FormattingEnabled = true;
+            this.comboBox_Upgrade.Items.AddRange(new object[] {
+            "Pastila",
+            "Crema",
+            "Ceai",
+            "Spray"});
+            this.comboBox_Upgrade.Location = new System.Drawing.Point(779, 81);
+            this.comboBox_Upgrade.Name = "comboBox_Upgrade";
+            this.comboBox_Upgrade.Size = new System.Drawing.Size(157, 24);
+            this.comboBox_Upgrade.TabIndex = 42;
+            // 
+            // Upgrade_dateTimePicker
+            // 
+            this.Upgrade_dateTimePicker.Location = new System.Drawing.Point(492, 83);
+            this.Upgrade_dateTimePicker.Name = "Upgrade_dateTimePicker";
+            this.Upgrade_dateTimePicker.Size = new System.Drawing.Size(167, 22);
+            this.Upgrade_dateTimePicker.TabIndex = 37;
             // 
             // pictureBox_Add
             // 
@@ -294,20 +378,6 @@
             this.Nume_textBox_Upgrade.Size = new System.Drawing.Size(167, 22);
             this.Nume_textBox_Upgrade.TabIndex = 20;
             // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(544, 171);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(163, 22);
-            this.dateTimePicker1.TabIndex = 22;
-            // 
-            // Upgrade_dateTimePicker
-            // 
-            this.Upgrade_dateTimePicker.Location = new System.Drawing.Point(492, 83);
-            this.Upgrade_dateTimePicker.Name = "Upgrade_dateTimePicker";
-            this.Upgrade_dateTimePicker.Size = new System.Drawing.Size(167, 22);
-            this.Upgrade_dateTimePicker.TabIndex = 37;
-            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -329,54 +399,6 @@
             this.toolStripMenuItem2.Size = new System.Drawing.Size(211, 24);
             this.toolStripMenuItem2.Text = "toolStripMenuItem2";
             // 
-            // comboBox_Upgrade
-            // 
-            this.comboBox_Upgrade.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_Upgrade.FormattingEnabled = true;
-            this.comboBox_Upgrade.Items.AddRange(new object[] {
-            "Pastila",
-            "Crema",
-            "Ceai",
-            "Spray"});
-            this.comboBox_Upgrade.Location = new System.Drawing.Point(779, 81);
-            this.comboBox_Upgrade.Name = "comboBox_Upgrade";
-            this.comboBox_Upgrade.Size = new System.Drawing.Size(157, 24);
-            this.comboBox_Upgrade.TabIndex = 42;
-            // 
-            // Tip_label_Upgrade
-            // 
-            this.Tip_label_Upgrade.AutoSize = true;
-            this.Tip_label_Upgrade.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Tip_label_Upgrade.Location = new System.Drawing.Point(693, 75);
-            this.Tip_label_Upgrade.Name = "Tip_label_Upgrade";
-            this.Tip_label_Upgrade.Size = new System.Drawing.Size(63, 32);
-            this.Tip_label_Upgrade.TabIndex = 43;
-            this.Tip_label_Upgrade.Text = "Tip:";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(732, 163);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(63, 32);
-            this.label1.TabIndex = 45;
-            this.label1.Text = "Tip:";
-            // 
-            // comboBox
-            // 
-            this.comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox.FormattingEnabled = true;
-            this.comboBox.Items.AddRange(new object[] {
-            "Pastila",
-            "Crema",
-            "Ceai",
-            "Spray"});
-            this.comboBox.Location = new System.Drawing.Point(801, 169);
-            this.comboBox.Name = "comboBox";
-            this.comboBox.Size = new System.Drawing.Size(105, 24);
-            this.comboBox.TabIndex = 44;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -384,6 +406,8 @@
             this.ClientSize = new System.Drawing.Size(976, 916);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.medicament_Group);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
@@ -433,6 +457,8 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBox;
+        private System.Windows.Forms.TextBox Filtru_textBox;
+        private System.Windows.Forms.Label Filtru_label;
     }
 }
 

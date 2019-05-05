@@ -15,8 +15,8 @@ namespace Medicamente
         public static string sqlQuery;
         public static SqlConnection connection = new SqlConnection();
         public static SqlDataAdapter dataAdapter;
-        public static DataSet dataSet;
         public static SqlCommand command;
+        public static DataSet dataSet;
         public static BindingSource bindingSource;
 
         public static string GetConnectionString()
