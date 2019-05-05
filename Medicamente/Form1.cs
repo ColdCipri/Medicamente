@@ -88,12 +88,7 @@ namespace Medicamente
                 SqlCommand command = new SqlCommand(query, SqlConn.connection);
                 command.ExecuteNonQuery();
                 this.listBox1.Items.RemoveAt(this.listBox1.SelectedIndex);
-
-                //Update
-                Form1 childForm = new Form1();
-                this.Hide();
-                childForm.Closed += (s, args) => this.Close();
-                childForm.ShowDialog();
+                
             }
             else
                 MessageBox.Show("Eroare! Nu sunt medicamente introduse!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -174,11 +169,7 @@ namespace Medicamente
                     {
                         comboBox.SelectedIndex = 3;
                     }
-                    DateTime today = DateTime.Today;
-                    if (DateTime.Compare(dateTimePicker1.Value.Date, today) < 0)
-                    {
-                        MessageBox.Show("Atentie! Acest medicament a expirat!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
+                    
                 }
                 catch
                 {
@@ -187,6 +178,11 @@ namespace Medicamente
                     this.Hide();
                     childForm.Closed += (s, args) => this.Close();
                     childForm.ShowDialog();
+                }
+                DateTime today = DateTime.Today;
+                if (DateTime.Compare(dateTimePicker1.Value.Date, today) < 0)
+                {
+                    MessageBox.Show("Atentie! Acest medicament a expirat!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 
             }
