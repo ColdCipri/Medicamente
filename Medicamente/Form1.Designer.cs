@@ -58,6 +58,8 @@
             this.Nume_label_Upgrade = new System.Windows.Forms.Label();
             this.Bucati_textbox_Upgrade = new System.Windows.Forms.TextBox();
             this.Nume_textBox_Upgrade = new System.Windows.Forms.TextBox();
+            this.Sortat_label = new System.Windows.Forms.Label();
+            this.SortareAlfabetica_CheckBox = new System.Windows.Forms.CheckBox();
             this.medicament_Group.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -66,6 +68,8 @@
             // 
             // medicament_Group
             // 
+            this.medicament_Group.Controls.Add(this.SortareAlfabetica_CheckBox);
+            this.medicament_Group.Controls.Add(this.Sortat_label);
             this.medicament_Group.Controls.Add(this.Id_label);
             this.medicament_Group.Controls.Add(this.Id_textBox);
             this.medicament_Group.Controls.Add(this.Filtru_label);
@@ -110,7 +114,7 @@
             // 
             this.Filtru_label.AutoSize = true;
             this.Filtru_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Filtru_label.Location = new System.Drawing.Point(11, 361);
+            this.Filtru_label.Location = new System.Drawing.Point(302, 140);
             this.Filtru_label.Name = "Filtru_label";
             this.Filtru_label.Size = new System.Drawing.Size(81, 29);
             this.Filtru_label.TabIndex = 47;
@@ -118,9 +122,9 @@
             // 
             // Filtru_textBox
             // 
-            this.Filtru_textBox.Location = new System.Drawing.Point(103, 368);
+            this.Filtru_textBox.Location = new System.Drawing.Point(389, 147);
             this.Filtru_textBox.Name = "Filtru_textBox";
-            this.Filtru_textBox.Size = new System.Drawing.Size(193, 22);
+            this.Filtru_textBox.Size = new System.Drawing.Size(147, 22);
             this.Filtru_textBox.TabIndex = 46;
             this.Filtru_textBox.TextChanged += new System.EventHandler(this.Filtru_textBox_TextChanged);
             // 
@@ -157,7 +161,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(327, 130);
+            this.pictureBox1.Location = new System.Drawing.Point(587, 130);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(344, 214);
             this.pictureBox1.TabIndex = 19;
@@ -199,6 +203,7 @@
             this.Bucati_textBox.Name = "Bucati_textBox";
             this.Bucati_textBox.Size = new System.Drawing.Size(36, 22);
             this.Bucati_textBox.TabIndex = 11;
+            this.Bucati_textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Bucati_textBox_KeyPress);
             // 
             // Nume_textBox
             // 
@@ -213,7 +218,7 @@
             this.listBox1.ItemHeight = 16;
             this.listBox1.Location = new System.Drawing.Point(16, 20);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(280, 324);
+            this.listBox1.Size = new System.Drawing.Size(280, 372);
             this.listBox1.TabIndex = 0;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
@@ -366,6 +371,7 @@
             this.Bucati_textbox_Upgrade.Name = "Bucati_textbox_Upgrade";
             this.Bucati_textbox_Upgrade.Size = new System.Drawing.Size(56, 22);
             this.Bucati_textbox_Upgrade.TabIndex = 21;
+            this.Bucati_textbox_Upgrade.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Bucati_textbox_Upgrade_KeyPress);
             // 
             // Nume_textBox_Upgrade
             // 
@@ -373,6 +379,26 @@
             this.Nume_textBox_Upgrade.Name = "Nume_textBox_Upgrade";
             this.Nume_textBox_Upgrade.Size = new System.Drawing.Size(167, 22);
             this.Nume_textBox_Upgrade.TabIndex = 20;
+            // 
+            // Sortat_label
+            // 
+            this.Sortat_label.AutoSize = true;
+            this.Sortat_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Sortat_label.Location = new System.Drawing.Point(302, 188);
+            this.Sortat_label.Name = "Sortat_label";
+            this.Sortat_label.Size = new System.Drawing.Size(201, 29);
+            this.Sortat_label.TabIndex = 48;
+            this.Sortat_label.Text = "Sortare alfabetica";
+            // 
+            // SortareAlfabetica_CheckBox
+            // 
+            this.SortareAlfabetica_CheckBox.AutoSize = true;
+            this.SortareAlfabetica_CheckBox.Location = new System.Drawing.Point(510, 195);
+            this.SortareAlfabetica_CheckBox.Name = "SortareAlfabetica_CheckBox";
+            this.SortareAlfabetica_CheckBox.Size = new System.Drawing.Size(18, 17);
+            this.SortareAlfabetica_CheckBox.TabIndex = 49;
+            this.SortareAlfabetica_CheckBox.UseVisualStyleBackColor = true;
+            this.SortareAlfabetica_CheckBox.CheckedChanged += new System.EventHandler(this.SortareAlfabetica_CheckBox_CheckedChanged);
             // 
             // Form1
             // 
@@ -431,6 +457,8 @@
         private System.Windows.Forms.ComboBox comboBox;
         private System.Windows.Forms.TextBox Filtru_textBox;
         private System.Windows.Forms.Label Filtru_label;
+        private System.Windows.Forms.CheckBox SortareAlfabetica_CheckBox;
+        private System.Windows.Forms.Label Sortat_label;
     }
 }
 

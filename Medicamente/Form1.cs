@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace Medicamente
 {
     public partial class Form1 : Form
@@ -26,51 +27,7 @@ namespace Medicamente
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            SqlConn.sqlQuery = "SELECT * FROM Medicamente";
-            SqlConn.OpenConn();
-            SqlConn.command = new SqlCommand(SqlConn.sqlQuery, SqlConn.connection);
-
-            SqlConn.dataAdapter = new SqlDataAdapter(SqlConn.command);
-            SqlConn.dataSet = new DataSet();
-            SqlConn.bindingSource = new BindingSource();
-            SqlConn.dataAdapter.Fill(SqlConn.dataSet, "Medicamente");
-
-            fillListbox(SqlConn.dataSet);
-            
-            //SqlConn.bindingSource.DataSource = SqlConn.dataSet.Tables["Medicamente"];
-
-            //Id_textBox.DataBindings.Add("Text", SqlConn.bindingSource, "Id");
-            //Nume_textBox.DataBindings.Add("Text", SqlConn.bindingSource, "Nume");
-            //Bucati_textBox.DataBindings.Add("Text", SqlConn.bindingSource, "Buc");
-            //dateTimePicker1.DataBindings.Add("Text", SqlConn.bindingSource, "DataExpirarii");
-            //pictureBox1.DataBindings.Add("Image", SqlConn.bindingSource, "Imagine", true);
-            
-
-            //if (SqlConn.dataSet.Tables["Medicamente"].Rows[0]["Pastila"].Equals(true))
-            //{
-            //    comboBox.SelectedIndex = 0;
-            //}
-            //else if(SqlConn.dataSet.Tables["Medicamente"].Rows[0]["Crema"].Equals(true))
-            //{
-            //    comboBox.SelectedIndex = 1;
-            //}
-            //else if (SqlConn.dataSet.Tables["Medicamente"].Rows[0]["Ceai"].Equals(true))
-            //{
-            //    comboBox.SelectedIndex = 2;
-            //}
-            //else 
-            //{
-            //    comboBox.SelectedIndex = 3;
-            //}
-            
-
-            //Id_textBox.ReadOnly = true;
-            //listBox1.SelectedIndex = 0;
-            //comboBox_Upgrade.SelectedIndex = 0;
-            //pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-
-            //listBox1.Sorted = true;
-            
+            fillListbox("SELECT Nume FROM Medicamente");
         }
         
 
@@ -107,172 +64,179 @@ namespace Medicamente
                 
                 try
                 {
+                    SqlConn.OpenConn();
                     byte[] images = null;
                     FileStream stream = new FileStream(imgLocation, FileMode.Open, FileAccess.Read);
                     BinaryReader binaryReader = new BinaryReader(stream);
                     images = binaryReader.ReadBytes((int)stream.Length);
 
-                    string query = "INSERT INTO Medicamente(Nume, Buc, DataExpirarii, Imagine) " +
-                               "Values('" + name + "', '" + bucati + "', '" + data + "', @images)";
+                    string query = "";
+                    string text = comboBox_Upgrade.Text;
 
-                    SqlCommand command = new SqlCommand(query, SqlConn.connection);
+                    if (text.Equals("Pastila"))
+                    {
+                        query = "INSERT INTO Medicamente(Nume, Buc, Pastila, Crema, Ceai, Spray, DataExpirarii, Imagine) VALUES('" + name + "', " + bucati + ", " + 1 + ", " + 0 + ", " + 0 + ", " + 0 + ", '" + data + "', @images)";
+                    }
+                    else if (text.Equals("Crema"))
+                    {
+                        query = "INSERT INTO Medicamente(Nume, Buc, Pastila, Crema, Ceai, Spray, DataExpirarii, Imagine) VALUES('" + name + "', " + bucati + ", " + 0 + ", " + 1 + ", " + 0 + ", " + 0 + ", '" + data + "', @images)";
+                    }
+                    else if (text.Equals("Ceai"))
+                    {
+                        query = "INSERT INTO Medicamente(Nume, Buc, Pastila, Crema, Ceai, Spray, DataExpirarii, Imagine) VALUES('" + name + "', " + bucati + ", " + 0 + ", " + 0 + ", " + 1 + ", " + 0 + ", '" + data + "', @images)";
+                    }
+                    else if (text.Equals("Spray"))
+                    {
+                        query = "INSERT INTO Medicamente(Nume, Buc, Pastila, Crema, Ceai, Spray, DataExpirarii, Imagine) VALUES('" + name + "', " + bucati + ", " + 0 + ", " + 0 + ", " + 0 + ", " + 1 + ", '" + data + "', @images)";
+                    }
+                    else
+                        MessageBox.Show("Eroare! Nu ati ales tipul medicamentului! \n " + text, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    SqlCommand command = SqlConn.connection.CreateCommand(); 
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = query;
                     command.Parameters.Add(new SqlParameter("@images", images));
-
                     command.ExecuteNonQuery();
-                    //Update
-                    Form1 childForm = new Form1();
-                    this.Hide();
-                    childForm.Closed += (s, args) => this.Close();
-                    childForm.ShowDialog();
+                    
+                    if (pictureBox_Add.ImageLocation == "")
+                    {
+                        MessageBox.Show("Eroare! Nu ai ales poza!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                    Nume_textBox_Upgrade.Text = "";
+                    Bucati_textbox_Upgrade.Text = "";
+                    Upgrade_dateTimePicker.Text = "";
+                    comboBox_Upgrade.SelectedIndex = -1;
+                    pictureBox_Add.Image = null;
+                    pictureBox_Add.ImageLocation = "";
+                    imgLocation = "";
+
+                    fillListbox("SELECT Nume FROM Medicamente");
+
+                    
+                    SqlConn.CloseConn();
                 }
                 catch
                 {
-                    MessageBox.Show("Eroare! Nu ai ales poza!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //
                 }
                 
             }
-            
 
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //if (SqlConn.bindingSource != null)
-            //{
-            //    SqlConn.bindingSource.Position = listBox1.SelectedIndex;//HERE IS THE PROBLEM
-
-            //    try
-            //    {
-            //        if (SqlConn.dataSet.Tables["Medicamente"].Rows[SqlConn.bindingSource.Position]["Pastila"].Equals(true))
-            //        {
-            //            comboBox.SelectedIndex = 0;
-            //        }
-            //        else if (SqlConn.dataSet.Tables["Medicamente"].Rows[SqlConn.bindingSource.Position]["Crema"].Equals(true))
-            //        {
-            //            comboBox.SelectedIndex = 1;
-            //        }
-            //        else if (SqlConn.dataSet.Tables["Medicamente"].Rows[SqlConn.bindingSource.Position]["Ceai"].Equals(true))
-            //        {
-            //            comboBox.SelectedIndex = 2;
-            //        }
-            //        else
-            //        {
-            //            comboBox.SelectedIndex = 3;
-            //        }
-
-            //    }
-            //    catch
-            //    {
-            //        //Update
-            //        Form1 childForm = new Form1();
-            //        this.Hide();
-            //        childForm.Closed += (s, args) => this.Close();
-            //        childForm.ShowDialog();
-            //    }
-            //    DateTime today = DateTime.Today;
-            //    if (DateTime.Compare(dateTimePicker1.Value.Date, today) < 0)
-            //    {
-            //        string text = "Atentie! Acest medicament a expirat! \nDoresti sa il sterg?";
-            //        DialogResult dialogResult = MessageBox.Show(text, "Error!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            //        if (dialogResult == DialogResult.Yes)
-            //        {
-            //            deleteSelected();
-            //        }
-
-            //    }
-
-            //}
-
-            string sqlQuery = "SELECT * FROM Medicamente WHERE Nume='" + listBox1.SelectedItem +"'";//you left here
-
-            SqlCommand command = new SqlCommand(sqlQuery, SqlConn.connection);
-
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
-            DataSet dataSet = new DataSet();
-            BindingSource bindingSource = new BindingSource();
-            dataAdapter.Fill(dataSet, "Medicamente");
-
-            fillListbox(dataSet);
-
-            bindingSource.DataSource = dataSet.Tables["Medicamente"];
-
-            Id_textBox.DataBindings.Clear();
-            Nume_textBox.DataBindings.Clear();
-            Bucati_textBox.DataBindings.Clear();
-            dateTimePicker1.DataBindings.Clear();
-            pictureBox1.DataBindings.Clear();
-
-            Id_textBox.DataBindings.Add("Text", bindingSource, "Id");
-            Nume_textBox.DataBindings.Add("Text", bindingSource, "Nume");
-            Bucati_textBox.DataBindings.Add("Text", bindingSource, "Buc");
-            dateTimePicker1.DataBindings.Add("Text", bindingSource, "DataExpirarii");
-            pictureBox1.DataBindings.Add("Image", bindingSource, "Imagine", true);
-
-
-            if (dataSet.Tables["Medicamente"].Rows[bindingSource.Position]["Pastila"].Equals(true))
-            {
-                comboBox.SelectedIndex = 0;
-            }
-            else if (dataSet.Tables["Medicamente"].Rows[bindingSource.Position]["Crema"].Equals(true))
-            {
-                comboBox.SelectedIndex = 1;
-            }
-            else if (dataSet.Tables["Medicamente"].Rows[bindingSource.Position]["Ceai"].Equals(true))
-            {
-                comboBox.SelectedIndex = 2;
-            }
-            else 
-            {
-                comboBox.SelectedIndex = 3;
-            }
-
+            SqlConn.OpenConn();
             
+            SqlCommand command = SqlConn.connection.CreateCommand();
+            command.CommandType = CommandType.Text;
+            command.CommandText = "SELECT * FROM Medicamente WHERE Nume = '" + listBox1.SelectedItem.ToString() + "'";
+            command.ExecuteNonQuery();
+            
+
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+            dataAdapter.Fill(dataTable);
+
+            foreach (DataRow r in dataTable.Rows)
+            {
+                Id_textBox.Text = r["Id"].ToString();
+                Nume_textBox.Text = r["Nume"].ToString();
+                Bucati_textBox.Text = r["Buc"].ToString();
+                dateTimePicker1.Text = r["DataExpirarii"].ToString();
+                pictureBox1.Image = Image.FromStream(new MemoryStream((byte[])r["Imagine"]));
+                if (r["Pastila"].ToString().Equals("True"))
+                {
+                    comboBox.SelectedIndex = 0;
+                }
+                else if (r["Crema"].ToString().Equals("True"))
+                {
+                    comboBox.SelectedIndex = 1;
+                }
+                else if (r["Ceai"].ToString().Equals("True"))
+                {
+                    comboBox.SelectedIndex = 2;
+                }
+                else
+                {
+                    comboBox.SelectedIndex = 3;
+                }
+            }
+
+            Id_textBox.ReadOnly = true;
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            
+
+            if (DateTime.Compare(dateTimePicker1.Value.Date, DateTime.Now.Date) < 0)
+            { 
+                if (MessageBox.Show("Acest medicament a expirat! \nDoresti sa il stergi?", "Expirat!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    deleteSelected();
+                }
+            }
+            else if (DateTime.Compare(dateTimePicker1.Value.Date, DateTime.Now.Date) == 0)
+            {
+                MessageBox.Show("Acest medicament expira azi!", "Expirat!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
+            SqlConn.CloseConn();
         }
 
         private void Upgrade_button_Click(object sender, EventArgs e)
         {
+            
             if (Id_textBox.Text == "" || Nume_textBox.Text == "" || Bucati_textBox.Text == "" || dateTimePicker1.Text == "")
                 MessageBox.Show("Eroare! Minim un camp este gol!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
+                SqlConn.OpenConn();
                 int id = Int32.Parse(Id_textBox.Text);
                 string name = Nume_textBox.Text;
                 string bucati = Bucati_textBox.Text;
                 string data = dateTimePicker1.Text;
                 string text = comboBox.Text;
-
+                string query = "";
+                
                 if (text.Equals("Pastila"))
                 {
-                    string query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 1 + ", Crema = " + 0 + ", Ceai = " + 0 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
-                    SqlCommand command = new SqlCommand(query, SqlConn.connection);
-                    command.ExecuteNonQuery();
+                    query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 1 + ", Crema = " + 0 + ", Ceai = " + 0 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
+                    
                 }
                 else if (text.Equals("Crema"))
                 {
-                    string query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 1 + ", Ceai = " + 0 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
-                    SqlCommand command = new SqlCommand(query, SqlConn.connection);
-                    command.ExecuteNonQuery();
+                    query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 1 + ", Ceai = " + 0 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
                 }
                 else if (text.Equals("Ceai"))
                 {
-                    string query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 0 + ", Ceai = " + 1 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
-                    SqlCommand command = new SqlCommand(query, SqlConn.connection);
-                    command.ExecuteNonQuery();
+                    query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 0 + ", Ceai = " + 1 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
                 }
                 else
                 {
-                    string query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 0 + ", Ceai = " + 0 + ", Spray = " + 1 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
-                    SqlCommand command = new SqlCommand(query, SqlConn.connection);
-                    command.ExecuteNonQuery();
+                    query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 0 + ", Ceai = " + 0 + ", Spray = " + 1 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
                 }
 
-                //Update
-                Form1 childForm = new Form1();
-                this.Hide();
-                childForm.Closed += (s, args) => this.Close();
-                childForm.ShowDialog();
+                SqlCommand command = SqlConn.connection.CreateCommand();
+                command.CommandType = CommandType.Text;
+                command.CommandText = query;
+                command.ExecuteNonQuery();
+                SqlConn.CloseConn();
+
+                Id_textBox.Text = "";
+                Nume_textBox.Text = "";
+                Bucati_textBox.Text = "";
+                dateTimePicker1.Text = "";
+                comboBox.SelectedIndex = -1;
+                pictureBox1.Image = null;
+                pictureBox1.ImageLocation = "";
+                imgLocation = "";
+
+                fillListbox("SELECT Nume FROM Medicamente");
+
+
+                SqlConn.CloseConn();
             }
+            
             
         }
 
@@ -297,57 +261,79 @@ namespace Medicamente
         {
             if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
             {
-
-                fillListbox(SqlConn.dataSet);
+                fillListbox("SELECT Nume FROM Medicamente");
             }
             else
             {
-
                 string query = "SELECT * FROM Medicamente WHERE Nume LIKE '" + Filtru_textBox.Text + "%'";
-
-                SqlCommand command = new SqlCommand(query , SqlConn.connection);
-
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
-                DataSet dataSet = new DataSet();
-                dataAdapter.Fill(dataSet, "Medicamente");
-
-                fillListbox(dataSet);
+                
+                fillListbox(query);
             }
 
         }
 
         private void deleteSelected()
         {
+            SqlConn.OpenConn();
             int id = Int32.Parse(Id_textBox.Text);
             string query = "DELETE FROM Medicamente WHERE Id =" + id;
 
-            SqlCommand command = new SqlCommand(query, SqlConn.connection);
+            SqlCommand command = SqlConn.connection.CreateCommand();
+            command.CommandType = CommandType.Text;
+            command.CommandText = query;
             command.ExecuteNonQuery();
-            this.listBox1.Items.RemoveAt(this.listBox1.SelectedIndex);
+
+            SqlConn.CloseConn();
+
+            Id_textBox.Text = "";
+            Nume_textBox.Text = "";
+            Bucati_textBox.Text = "";
+            dateTimePicker1.Text = "";
+            comboBox.SelectedIndex = -1;
+            pictureBox1.Image = null; 
+
+            fillListbox("SELECT Nume FROM Medicamente");
         }
 
-        private void fillListbox(DataSet dataSet)
+        private void fillListbox(string query)
         {
-            listBox1.DataSource = null;
-            listBox1.Items.Clear();
 
-            foreach (DataRow r in dataSet.Tables["Medicamente"].Rows)
+            listBox1.Items.Clear();
+            SqlConn.OpenConn();
+            SqlCommand command = SqlConn.connection.CreateCommand();
+
+            command.CommandType = CommandType.Text;
+            command.CommandText = query;
+            command.ExecuteNonQuery();
+
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+            dataAdapter.Fill(dataTable);
+
+            foreach (DataRow r in dataTable.Rows)
             {
                 listBox1.Items.Add(r["Nume"].ToString());
-                //Id_textBox.Text = r["Id"].ToString();
-                //Nume_textBox.Text = r["Nume"].ToString();
-                //Bucati_textBox.Text = r["Buc"].ToString();
-                //dateTimePicker1.Text = r["DataExpirarii"].ToString();
-                //pictureBox1.Image = r["Imagine"];
-                //Id_textBox.ReadOnly = true;
-
-                //Id_textBox.DataBindings.Add("Text", SqlConn.bindingSource, "Id");
-                //Nume_textBox.DataBindings.Add("Text", SqlConn.bindingSource, "Nume");
-                //Bucati_textBox.DataBindings.Add("Text", SqlConn.bindingSource, "Buc");
-                //dateTimePicker1.DataBindings.Add("Text", SqlConn.bindingSource, "DataExpirarii");
-                //pictureBox1.DataBindings.Add("Image", SqlConn.bindingSource, "Imagine", true);
             }
-            listBox1.ValueMember = "Id";
+            
+            SqlConn.CloseConn();
+        }
+
+        private void Bucati_textbox_Upgrade_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void Bucati_textBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
+
+        private void SortareAlfabetica_CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (SortareAlfabetica_CheckBox.Checked == true)
+                fillListbox("SELECT Nume FROM Medicamente ORDER BY Nume");
+            else
+                fillListbox("SELECT Nume FROM Medicamente");
         }
     }   
 }

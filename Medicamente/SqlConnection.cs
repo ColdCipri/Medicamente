@@ -12,12 +12,7 @@ namespace Medicamente
 {
     static class SqlConn
     {
-        public static string sqlQuery;
         public static SqlConnection connection = new SqlConnection();
-        public static SqlDataAdapter dataAdapter;
-        public static SqlCommand command;
-        public static DataSet dataSet;
-        public static BindingSource bindingSource;
 
         public static string GetConnectionString()
         {
