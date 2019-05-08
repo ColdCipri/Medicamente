@@ -54,10 +54,9 @@ namespace Medicamente
         {
             string name = Nume_textBox_Upgrade.Text;
             string bucati = Bucati_textbox_Upgrade.Text;
-            
             string data = Upgrade_dateTimePicker.Text;
-
-            if (name == "" || bucati == "" || data == "")
+            string text = comboBox_Upgrade.Text;
+            if (name == "" || bucati == "" || data == "" || text == "")
                 MessageBox.Show("Eroare! Nu ati completat spatiile!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
@@ -71,7 +70,6 @@ namespace Medicamente
                     images = binaryReader.ReadBytes((int)stream.Length);
 
                     string query = "";
-                    string text = comboBox_Upgrade.Text;
 
                     if (text.Equals("Pastila"))
                     {
@@ -89,8 +87,8 @@ namespace Medicamente
                     {
                         query = "INSERT INTO Medicamente(Nume, Buc, Pastila, Crema, Ceai, Spray, DataExpirarii, Imagine) VALUES('" + name + "', " + bucati + ", " + 0 + ", " + 0 + ", " + 0 + ", " + 1 + ", '" + data + "', @images)";
                     }
-                    else
-                        MessageBox.Show("Eroare! Nu ati ales tipul medicamentului! \n " + text, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //MessageBox.Show("Eroare! Nu ati ales tipul medicamentului! \n " + text, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
 
                     SqlCommand command = SqlConn.connection.CreateCommand(); 
                     command.CommandType = CommandType.Text;
@@ -98,10 +96,6 @@ namespace Medicamente
                     command.Parameters.Add(new SqlParameter("@images", images));
                     command.ExecuteNonQuery();
                     
-                    if (pictureBox_Add.ImageLocation == "")
-                    {
-                        MessageBox.Show("Eroare! Nu ai ales poza!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
 
                     Nume_textBox_Upgrade.Text = "";
                     Bucati_textbox_Upgrade.Text = "";
@@ -118,7 +112,7 @@ namespace Medicamente
                 }
                 catch
                 {
-                    //
+                    MessageBox.Show("Eroare! Nu ai ales poza!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 
             }
