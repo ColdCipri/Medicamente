@@ -125,56 +125,63 @@ namespace Medicamente
             
             SqlCommand command = SqlConn.connection.CreateCommand();
             command.CommandType = CommandType.Text;
-            command.CommandText = "SELECT * FROM Medicamente WHERE Nume = '" + listBox1.SelectedItem.ToString() + "'";
-            command.ExecuteNonQuery();
-            
-
-            DataTable dataTable = new DataTable();
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
-            dataAdapter.Fill(dataTable);
-
-            foreach (DataRow r in dataTable.Rows)
+            if (listBox1.SelectedIndex == -1)
+                listBox1.ClearSelected();
+            else
             {
-                Id_textBox.Text = r["Id"].ToString();
-                Nume_textBox.Text = r["Nume"].ToString();
-                Bucati_textBox.Text = r["Buc"].ToString();
-                dateTimePicker1.Text = r["DataExpirarii"].ToString();
-                pictureBox1.Image = Image.FromStream(new MemoryStream((byte[])r["Imagine"]));
-                if (r["Pastila"].ToString().Equals("True"))
+                command.CommandText = "SELECT * FROM Medicamente WHERE Nume = '" + listBox1.SelectedItem.ToString() + "'";
+                command.ExecuteNonQuery();
+
+
+                DataTable dataTable = new DataTable();
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+                dataAdapter.Fill(dataTable);
+
+                foreach (DataRow r in dataTable.Rows)
                 {
-                    comboBox.SelectedIndex = 0;
+                    Id_textBox.Text = r["Id"].ToString();
+                    Nume_textBox.Text = r["Nume"].ToString();
+                    Bucati_textBox.Text = r["Buc"].ToString();
+                    dateTimePicker1.Text = r["DataExpirarii"].ToString();
+                    pictureBox1.Image = Image.FromStream(new MemoryStream((byte[])r["Imagine"]));
+                    if (r["Pastila"].ToString().Equals("True"))
+                    {
+                        comboBox.SelectedIndex = 0;
+                    }
+                    else if (r["Crema"].ToString().Equals("True"))
+                    {
+                        comboBox.SelectedIndex = 1;
+                    }
+                    else if (r["Ceai"].ToString().Equals("True"))
+                    {
+                        comboBox.SelectedIndex = 2;
+                    }
+                    else
+                    {
+                        comboBox.SelectedIndex = 3;
+                    }
                 }
-                else if (r["Crema"].ToString().Equals("True"))
+
+                Id_textBox.ReadOnly = true;
+                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                if (DateTime.Compare(dateTimePicker1.Value.Date, DateTime.Now.Date) < 0)
                 {
-                    comboBox.SelectedIndex = 1;
+                    if (MessageBox.Show("Acest medicament a expirat! \nDoresti sa il stergi?", "Expirat!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    {
+                        deleteSelected();
+                    }
                 }
-                else if (r["Ceai"].ToString().Equals("True"))
+                else if (DateTime.Compare(dateTimePicker1.Value.Date, DateTime.Now.Date) == 0)
                 {
-                    comboBox.SelectedIndex = 2;
+                    MessageBox.Show("Acest medicament expira azi!", "Expirat!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
-                else
-                {
-                    comboBox.SelectedIndex = 3;
-                }
+
+                SqlConn.CloseConn();
             }
 
-            Id_textBox.ReadOnly = true;
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+
             
-
-            if (DateTime.Compare(dateTimePicker1.Value.Date, DateTime.Now.Date) < 0)
-            { 
-                if (MessageBox.Show("Acest medicament a expirat! \nDoresti sa il stergi?", "Expirat!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    deleteSelected();
-                }
-            }
-            else if (DateTime.Compare(dateTimePicker1.Value.Date, DateTime.Now.Date) == 0)
-            {
-                MessageBox.Show("Acest medicament expira azi!", "Expirat!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-
-            SqlConn.CloseConn();
         }
 
         private void Upgrade_button_Click(object sender, EventArgs e)
