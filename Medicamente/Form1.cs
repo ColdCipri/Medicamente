@@ -324,10 +324,22 @@ namespace Medicamente
 
         private void SortareAlfabetica_CheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (SortareAlfabetica_CheckBox.Checked == true)
-                fillListbox("SELECT Nume FROM Medicamente ORDER BY Nume");
+            if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
+            {
+                if (SortareAlfabetica_CheckBox.Checked == true)
+                    fillListbox("SELECT Nume FROM Medicamente ORDER BY Nume");
+                else
+                    fillListbox("SELECT Nume FROM Medicamente");
+            }
             else
-                fillListbox("SELECT Nume FROM Medicamente");
+            {
+                if (SortareAlfabetica_CheckBox.Checked == true)
+                    fillListbox("SELECT * FROM Medicamente WHERE Nume LIKE '" + Filtru_textBox.Text + "%' ORDER BY Nume");
+                else
+                    fillListbox("SELECT * FROM Medicamente WHERE Nume LIKE '" + Filtru_textBox.Text + "%'");
+            }
+
+            Id_textBox.ReadOnly = true;
         }
     }   
 }
