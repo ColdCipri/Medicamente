@@ -28,6 +28,8 @@ namespace Medicamente
         private void Form1_Load(object sender, EventArgs e)
         {
             fillListbox("SELECT Nume FROM Medicamente");
+            Delete_button.Enabled = false;
+            Upgrade_button.Enabled = false;
         }
         
 
@@ -126,12 +128,19 @@ namespace Medicamente
             SqlCommand command = SqlConn.connection.CreateCommand();
             command.CommandType = CommandType.Text;
             if (listBox1.SelectedIndex == -1)
+            {
                 listBox1.ClearSelected();
+                Delete_button.Enabled = false;
+                Upgrade_button.Enabled = false;
+            }
             else
             {
                 command.CommandText = "SELECT * FROM Medicamente WHERE Nume = '" + listBox1.SelectedItem.ToString() + "'";
                 command.ExecuteNonQuery();
 
+
+                Delete_button.Enabled = true;
+                Upgrade_button.Enabled = true;
 
                 DataTable dataTable = new DataTable();
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(command);

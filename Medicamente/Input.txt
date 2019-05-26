@@ -1,0 +1,72 @@
+Eubiotic,10,1,0,0,0,01-01-2020
+Brufen 400mg,30,1,0,0,0,30-06-2019
+Sorbifer Durules,50,1,0,0,0,30-02-2020
+Gabapentin Aurobindo,7,1,0,0,0,30-05-2020
+Muconasal Spray,1,0,0,0,1,31-12-2020
+Aloe Vera,1,0,1,0,0,31-01-2021
+Tantum Verde,1,0,0,0,1,30-03-2020
+BronhoSuport sirop tuse,SIROP,31-07-2020
+Antinevralgic Forte,20,1,0,0,0,30-09-2019
+Uractiv 21,21,1,0,0,0,30-06-2020
+UroSuport Forte,14,1,0,0,0,31-12-2021
+Audi Spray,1,0,0,0,1,30-11-2020
+Algocalmin,40,1,0,0,0,30-10-2019
+Algocalmin,20,1,0,0,0,31-05-2020
+Magnerot,100,1,0,0,0,30-10-2021,
+Coldrex Max Grip Lemon,10,1,0,0,0,31-11-2020
+Coldrex Max Grip Lemon,10,1,0,0,0,31-05-2021
+Paracetamol,20,1,0,0,0,30-01-2021
+Ibuprofen,20,1,0,0,0,28-02-2020
+Metroclopramid,12,1,0,0,0,31-12-2021
+Emetix,4,1,0,0,0,NU ARE
+Tagremin 400mg/80mg,10,1,0,0,0,30-06-2020
+Cocculine,30,1,0,0,0,31-12-2021
+Anticarcel,50,1,0,0,0,31-05-2020
+Voltaren Forte,1,0,1,0,0,31-08-2021
+Voltaren,1,0,1,0,0,30-06-2020
+Strepsils Intensiv,24,1,0,0,0,30-04-2020
+Fiobilin,20,1,0,0,0,31-03-2022
+Motilium,10,1,0,0,0,31-05-2021
+Fasconal,20,1,0,0,0,30-04-2020
+Imodium,6,1,0,0,0,31-12-2022
+Drill,5,1,0,0,0,30-06-2020
+NoSPA,24,1,0,0,0,31-05-2020
+Triferment,30,1,0,0,0,01-05-2021
+Omeprazol Terapia 20mg,30,1,0,0,0,30-04-2020
+Omeprazol Terapia 20mg,30,1,0,0,0,31-05-2020
+Distonoplant,60,1,0,0,0,31-12-2020
+AlleGel,0,,1,0,0,31-05-2021
+Uractiv Forte,10,1,0,0,0,30-06-2019
+Baraka,24,1,0,0,0,31-07-2021
+Sindolor Gel,1,0,1,0,0,31-03-2020
+Betadine,Picaturi,30-06-2020
+Meloxicam 15mg,2,Supozitoare,30-04-2020
+Orofar,24,1,0,0,0,31-05-2020
+Olinth,1,0,0,0,1,31-08-2019
+Olinth,1,0,0,0,1,30-06-2020
+Locoid,1,0,1,0,0,30-04-2020
+Hyaginol,1,GEL,31-05-2020
+Herbaflu,1,Picaturi,01-02-2020
+Anaftin,1,Spray,30-11-2020
+Parasinus,20,1,0,0,0,30-06-2020
+Betabioptal,1,Picaturi,31-05-2020
+Augumentin 75/125mg,14,1,0,0,0,31-07-2019
+Crema de galbenele,1,Crema,31-03-2021
+Relaxirem Forte,28,1,0,0,0,31-10-2020
+Tantum Verde,1,0,0,0,1,31-01-2022
+Ibutin 300mg,20,1,0,0,0,31-12-2019
+Cebrium,30,1,0,0,0,31-05-2021
+Fucidin,1,0,1,0,0,31-03-2020
+Xyzal,33,1,0,0,0,31-07-2021
+Solutie auriculara,1,Spray,01-06-2019
+Vitamina C 1000mg,10,1,0,0,0,31-05-2020
+Venter,3,1,0,0,0,31-11-2021
+Venter,15,1,0,0,0,31-12-2021
+Sumetrolim,14,1,0,0,0,30-06-2022
+Hemorzon,1,Crema,30-06-2019
+Elocom,1,Crema,28-02-2020
+Vitamina B12,50,1,0,0,0,28-02-2020
+Supramax Articulatii,1,Spray,30-04-2020
+Gel Racoritor gheara dracului,1,Gel,20-05-2020
+Extract din Mladite de Zmeur,1,Picaturi,31-01-2024
+Extract din Mladite de Cimsir,1,Picaturi,31-01-2023
