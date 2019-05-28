@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.medicament_Group = new System.Windows.Forms.GroupBox();
             this.Restart_button = new System.Windows.Forms.Button();
             this.ID_text_label = new System.Windows.Forms.Label();
@@ -51,6 +52,8 @@
             this.listBoxMedicamente = new System.Windows.Forms.ListBox();
             this.FiltruExpirat_label = new System.Windows.Forms.Label();
             this.MedicamenteExpirate_checkBox = new System.Windows.Forms.CheckBox();
+            this.exit_button = new System.Windows.Forms.Button();
+            this.EasterEgg_button = new System.Windows.Forms.Button();
             this.medicament_Group.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Imagine_pictureBox)).BeginInit();
             this.SuspendLayout();
@@ -79,21 +82,28 @@
             this.medicament_Group.Controls.Add(this.Bucati_textBox);
             this.medicament_Group.Controls.Add(this.Nume_textBox);
             this.medicament_Group.Controls.Add(this.listBoxMedicamente);
-            this.medicament_Group.Location = new System.Drawing.Point(22, 20);
+            this.medicament_Group.Location = new System.Drawing.Point(12, 32);
             this.medicament_Group.Name = "medicament_Group";
-            this.medicament_Group.Size = new System.Drawing.Size(885, 585);
+            this.medicament_Group.Size = new System.Drawing.Size(885, 581);
             this.medicament_Group.TabIndex = 0;
             this.medicament_Group.TabStop = false;
             this.medicament_Group.Text = "Medicament";
             // 
             // Restart_button
             // 
-            this.Restart_button.Location = new System.Drawing.Point(307, 350);
+            this.Restart_button.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.Restart_button.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Restart_button.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.Restart_button.FlatAppearance.BorderSize = 0;
+            this.Restart_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.Restart_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Restart_button.Font = new System.Drawing.Font("Microsoft Tai Le", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Restart_button.Location = new System.Drawing.Point(767, 532);
             this.Restart_button.Name = "Restart_button";
             this.Restart_button.Size = new System.Drawing.Size(112, 43);
             this.Restart_button.TabIndex = 35;
             this.Restart_button.Text = "Restart";
-            this.Restart_button.UseVisualStyleBackColor = true;
+            this.Restart_button.UseVisualStyleBackColor = false;
             this.Restart_button.Click += new System.EventHandler(this.Restart_button_Click);
             // 
             // ID_text_label
@@ -147,23 +157,28 @@
             // 
             // Delete_button
             // 
-            this.Delete_button.Location = new System.Drawing.Point(307, 285);
+            this.Delete_button.BackColor = System.Drawing.Color.Gold;
+            this.Delete_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Delete_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Delete_button.Location = new System.Drawing.Point(311, 341);
             this.Delete_button.Name = "Delete_button";
-            this.Delete_button.Size = new System.Drawing.Size(112, 43);
+            this.Delete_button.Size = new System.Drawing.Size(115, 51);
             this.Delete_button.TabIndex = 33;
             this.Delete_button.Text = "Sterge";
-            this.Delete_button.UseVisualStyleBackColor = true;
+            this.Delete_button.UseVisualStyleBackColor = false;
             this.Delete_button.Click += new System.EventHandler(this.Delete_button_Click);
             // 
             // Upload_button_Upgrade
             // 
+            this.Upload_button_Upgrade.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.Upload_button_Upgrade.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.Upload_button_Upgrade.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Upload_button_Upgrade.Location = new System.Drawing.Point(307, 145);
+            this.Upload_button_Upgrade.Location = new System.Drawing.Point(327, 131);
             this.Upload_button_Upgrade.Name = "Upload_button_Upgrade";
-            this.Upload_button_Upgrade.Size = new System.Drawing.Size(131, 30);
+            this.Upload_button_Upgrade.Size = new System.Drawing.Size(99, 39);
             this.Upload_button_Upgrade.TabIndex = 31;
             this.Upload_button_Upgrade.Text = "Incarca poza";
-            this.Upload_button_Upgrade.UseVisualStyleBackColor = true;
+            this.Upload_button_Upgrade.UseVisualStyleBackColor = false;
             this.Upload_button_Upgrade.Click += new System.EventHandler(this.Upload_button_Upgrade_Click);
             // 
             // Filtru_textBox
@@ -176,12 +191,15 @@
             // 
             // Update_button
             // 
-            this.Update_button.Location = new System.Drawing.Point(307, 216);
+            this.Update_button.BackColor = System.Drawing.Color.Gold;
+            this.Update_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.Update_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Update_button.Location = new System.Drawing.Point(311, 259);
             this.Update_button.Name = "Update_button";
-            this.Update_button.Size = new System.Drawing.Size(112, 43);
+            this.Update_button.Size = new System.Drawing.Size(115, 51);
             this.Update_button.TabIndex = 34;
             this.Update_button.Text = "Actualizare";
-            this.Update_button.UseVisualStyleBackColor = true;
+            this.Update_button.UseVisualStyleBackColor = false;
             this.Update_button.Click += new System.EventHandler(this.Upgrade_button_Click);
             // 
             // Tip_label
@@ -305,13 +323,51 @@
             this.MedicamenteExpirate_checkBox.UseVisualStyleBackColor = true;
             this.MedicamenteExpirate_checkBox.CheckedChanged += new System.EventHandler(this.MedicamenteExpirate_checkBox_CheckedChanged);
             // 
+            // exit_button
+            // 
+            this.exit_button.Cursor = System.Windows.Forms.Cursors.Default;
+            this.exit_button.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.exit_button.FlatAppearance.BorderSize = 0;
+            this.exit_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.exit_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red;
+            this.exit_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.exit_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.exit_button.Location = new System.Drawing.Point(872, 3);
+            this.exit_button.Name = "exit_button";
+            this.exit_button.Size = new System.Drawing.Size(27, 23);
+            this.exit_button.TabIndex = 1;
+            this.exit_button.Text = "X";
+            this.exit_button.UseVisualStyleBackColor = true;
+            this.exit_button.Click += new System.EventHandler(this.exit_button_Click);
+            // 
+            // EasterEgg_button
+            // 
+            this.EasterEgg_button.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.EasterEgg_button.Cursor = System.Windows.Forms.Cursors.No;
+            this.EasterEgg_button.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.EasterEgg_button.FlatAppearance.BorderSize = 0;
+            this.EasterEgg_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.EasterEgg_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.EasterEgg_button.Font = new System.Drawing.Font("Microsoft Tai Le", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EasterEgg_button.Location = new System.Drawing.Point(12, 3);
+            this.EasterEgg_button.Name = "EasterEgg_button";
+            this.EasterEgg_button.Size = new System.Drawing.Size(92, 23);
+            this.EasterEgg_button.TabIndex = 36;
+            this.EasterEgg_button.UseVisualStyleBackColor = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(925, 625);
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.ClientSize = new System.Drawing.Size(899, 625);
+            this.ControlBox = false;
+            this.Controls.Add(this.EasterEgg_button);
+            this.Controls.Add(this.exit_button);
             this.Controls.Add(this.medicament_Group);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
@@ -351,6 +407,8 @@
         private System.Windows.Forms.Label ID_text_label;
         private System.Windows.Forms.Label FiltruExpirat_label;
         private System.Windows.Forms.CheckBox MedicamenteExpirate_checkBox;
+        private System.Windows.Forms.Button exit_button;
+        private System.Windows.Forms.Button EasterEgg_button;
     }
 }
 
