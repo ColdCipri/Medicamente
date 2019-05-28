@@ -151,18 +151,18 @@
             this.Delete_button.Name = "Delete_button";
             this.Delete_button.Size = new System.Drawing.Size(112, 43);
             this.Delete_button.TabIndex = 33;
-            this.Delete_button.Text = "Delete";
+            this.Delete_button.Text = "Sterge";
             this.Delete_button.UseVisualStyleBackColor = true;
             this.Delete_button.Click += new System.EventHandler(this.Delete_button_Click);
             // 
             // Upload_button_Upgrade
             // 
-            this.Upload_button_Upgrade.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Upload_button_Upgrade.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Upload_button_Upgrade.Location = new System.Drawing.Point(307, 145);
             this.Upload_button_Upgrade.Name = "Upload_button_Upgrade";
             this.Upload_button_Upgrade.Size = new System.Drawing.Size(131, 30);
             this.Upload_button_Upgrade.TabIndex = 31;
-            this.Upload_button_Upgrade.Text = "Upload picture";
+            this.Upload_button_Upgrade.Text = "Incarca poza";
             this.Upload_button_Upgrade.UseVisualStyleBackColor = true;
             this.Upload_button_Upgrade.Click += new System.EventHandler(this.Upload_button_Upgrade_Click);
             // 
@@ -180,7 +180,7 @@
             this.Update_button.Name = "Update_button";
             this.Update_button.Size = new System.Drawing.Size(112, 43);
             this.Update_button.TabIndex = 34;
-            this.Update_button.Text = "Update";
+            this.Update_button.Text = "Actualizare";
             this.Update_button.UseVisualStyleBackColor = true;
             this.Update_button.Click += new System.EventHandler(this.Upgrade_button_Click);
             // 
