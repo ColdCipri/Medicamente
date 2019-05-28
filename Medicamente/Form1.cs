@@ -29,19 +29,19 @@ namespace Medicamente
         {
             fillListbox("SELECT Nume FROM Medicamente");
             Delete_button.Enabled = false;
-            Upgrade_button.Enabled = false;
+            Update_button.Text = "Add";
         }
-        
+
 
         private void Delete_button_Click(object sender, EventArgs e)
         {
             if (this.listBoxMedicamente.SelectedIndex >= 0)
             {
-                deleteSelected();                
+                deleteSelected();
             }
             else
                 MessageBox.Show("Eroare! Nu sunt medicamente introduse!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            
+
         }
 
         private void Restart_button_Click(object sender, EventArgs e)
@@ -52,95 +52,29 @@ namespace Medicamente
             childForm.ShowDialog();
         }
 
-        private void Add_button_Click(object sender, EventArgs e)
-        {
-            string name = Nume_Upgrade_textBox.Text;
-            string bucati = Bucati_Upgrade_textBox.Text;
-            string data = DataExpirarii_Upgrade_Picker.Text;
-            string text = Tip_Upgrade_comboBox.Text;
-            if (name == "" || bucati == "" || data == "" || text == "")
-                MessageBox.Show("Eroare! Nu ati completat spatiile!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            else
-            {
-                
-                try
-                {
-                    SqlConn.OpenConn();
-                    byte[] images = null;
-                    FileStream stream = new FileStream(imgLocation, FileMode.Open, FileAccess.Read);
-                    BinaryReader binaryReader = new BinaryReader(stream);
-                    images = binaryReader.ReadBytes((int)stream.Length);
-
-                    string query = "";
-
-                    if (text.Equals("Pastila"))
-                    {
-                        query = "INSERT INTO Medicamente(Nume, Buc, Pastila, Crema, Ceai, Spray, DataExpirarii, Imagine) VALUES('" + name + "', " + bucati + ", " + 1 + ", " + 0 + ", " + 0 + ", " + 0 + ", '" + data + "', @images)";
-                    }
-                    else if (text.Equals("Crema"))
-                    {
-                        query = "INSERT INTO Medicamente(Nume, Buc, Pastila, Crema, Ceai, Spray, DataExpirarii, Imagine) VALUES('" + name + "', " + bucati + ", " + 0 + ", " + 1 + ", " + 0 + ", " + 0 + ", '" + data + "', @images)";
-                    }
-                    else if (text.Equals("Ceai"))
-                    {
-                        query = "INSERT INTO Medicamente(Nume, Buc, Pastila, Crema, Ceai, Spray, DataExpirarii, Imagine) VALUES('" + name + "', " + bucati + ", " + 0 + ", " + 0 + ", " + 1 + ", " + 0 + ", '" + data + "', @images)";
-                    }
-                    else if (text.Equals("Spray"))
-                    {
-                        query = "INSERT INTO Medicamente(Nume, Buc, Pastila, Crema, Ceai, Spray, DataExpirarii, Imagine) VALUES('" + name + "', " + bucati + ", " + 0 + ", " + 0 + ", " + 0 + ", " + 1 + ", '" + data + "', @images)";
-                    }
-                    //MessageBox.Show("Eroare! Nu ati ales tipul medicamentului! \n " + text, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    
-
-                    SqlCommand command = SqlConn.connection.CreateCommand(); 
-                    command.CommandType = CommandType.Text;
-                    command.CommandText = query;
-                    command.Parameters.Add(new SqlParameter("@images", images));
-                    command.ExecuteNonQuery();
-                    
-
-                    Nume_Upgrade_textBox.Text = "";
-                    Bucati_Upgrade_textBox.Text = "";
-                    DataExpirarii_Upgrade_Picker.Text = "";
-                    Tip_Upgrade_comboBox.SelectedIndex = -1;
-                    Imagine_Upgrade_pictureBox.Image = null;
-                    Imagine_Upgrade_pictureBox.ImageLocation = "";
-                    imgLocation = "";
-
-                    fillListbox("SELECT Nume FROM Medicamente");
-
-                    
-                    SqlConn.CloseConn();
-                }
-                catch
-                {
-                    MessageBox.Show("Eroare! Nu ai ales poza!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                
-            }
-
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void listBoxMedicamente_SelectedIndexChanged(object sender, EventArgs e)
         {
             SqlConn.OpenConn();
-            
+
             SqlCommand command = SqlConn.connection.CreateCommand();
             command.CommandType = CommandType.Text;
             if (listBoxMedicamente.SelectedIndex == -1)
             {
                 listBoxMedicamente.ClearSelected();
                 Delete_button.Enabled = false;
-                Upgrade_button.Enabled = false;
+                Update_button.Text = "Add";
             }
             else
             {
+                if (Update_button.Text.Equals("Add"))
+                {
+                    Update_button.Text = "Update";
+                }
                 command.CommandText = "SELECT * FROM Medicamente WHERE Nume = '" + listBoxMedicamente.SelectedItem.ToString() + "'";
                 command.ExecuteNonQuery();
 
 
                 Delete_button.Enabled = true;
-                Upgrade_button.Enabled = true;
 
                 DataTable dataTable = new DataTable();
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
@@ -148,7 +82,7 @@ namespace Medicamente
 
                 foreach (DataRow r in dataTable.Rows)
                 {
-                    Id_textBox.Text = r["Id"].ToString();
+                    Id_label.Text = r["Id"].ToString();
                     Nume_textBox.Text = r["Nume"].ToString();
                     Bucati_textBox.Text = r["Buc"].ToString();
                     DataExpirarii_Picker.Text = r["DataExpirarii"].ToString();
@@ -170,8 +104,6 @@ namespace Medicamente
                         Tip_comboBox.SelectedIndex = 3;
                     }
                 }
-
-                Id_textBox.ReadOnly = true;
                 Imagine_pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
 
                 if (DateTime.Compare(DataExpirarii_Picker.Value.Date, DateTime.Now.Date) < 0)
@@ -190,64 +122,170 @@ namespace Medicamente
             }
 
 
-            
+
         }
 
         private void Upgrade_button_Click(object sender, EventArgs e)
         {
-            
-            if (Id_textBox.Text == "" || Nume_textBox.Text == "" || Bucati_textBox.Text == "" || DataExpirarii_Picker.Text == "")
+
+            if (Nume_textBox.Text == "" || Bucati_textBox.Text == "" || DataExpirarii_Picker.Text == "")
                 MessageBox.Show("Eroare! Minim un camp este gol!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
-                SqlConn.OpenConn();
-                int id = Int32.Parse(Id_textBox.Text);
-                string name = Nume_textBox.Text;
-                string bucati = Bucati_textBox.Text;
-                string data = DataExpirarii_Picker.Text;
-                string text = Tip_comboBox.Text;
-                string query = "";
-                
-                if (text.Equals("Pastila"))
+                if (Id_label.Text.Equals(""))//HAVENT DONE UPDATE WITH PICTURE
                 {
-                    query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 1 + ", Crema = " + 0 + ", Ceai = " + 0 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
-                    
-                }
-                else if (text.Equals("Crema"))
-                {
-                    query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 1 + ", Ceai = " + 0 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
-                }
-                else if (text.Equals("Ceai"))
-                {
-                    query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 0 + ", Ceai = " + 1 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
+                    try
+                    {
+                        SqlConn.OpenConn();
+                        byte[] images = null;
+                        FileStream stream = new FileStream(imgLocation, FileMode.Open, FileAccess.Read);
+                        BinaryReader binaryReader = new BinaryReader(stream);
+                        images = binaryReader.ReadBytes((int)stream.Length);
+                        string name = Nume_textBox.Text;
+                        string bucati = Bucati_textBox.Text;
+                        string data = DataExpirarii_Picker.Text;
+                        string text = Tip_comboBox.Text;
+                        string query = "";
+
+                        if (text.Equals("Pastila"))
+                        {
+                            query = "INSERT INTO Medicamente(Nume, Buc, Pastila, Crema, Ceai, Spray, DataExpirarii, Imagine) VALUES('" + name + "', " + bucati + ", " + 1 + ", " + 0 + ", " + 0 + ", " + 0 + ", '" + data + "', @images)";
+                        }
+                        else if (text.Equals("Crema"))
+                        {
+                            query = "INSERT INTO Medicamente(Nume, Buc, Pastila, Crema, Ceai, Spray, DataExpirarii, Imagine) VALUES('" + name + "', " + bucati + ", " + 0 + ", " + 1 + ", " + 0 + ", " + 0 + ", '" + data + "', @images)";
+                        }
+                        else if (text.Equals("Ceai"))
+                        {
+                            query = "INSERT INTO Medicamente(Nume, Buc, Pastila, Crema, Ceai, Spray, DataExpirarii, Imagine) VALUES('" + name + "', " + bucati + ", " + 0 + ", " + 0 + ", " + 1 + ", " + 0 + ", '" + data + "', @images)";
+                        }
+                        else if (text.Equals("Spray"))
+                        {
+                            query = "INSERT INTO Medicamente(Nume, Buc, Pastila, Crema, Ceai, Spray, DataExpirarii, Imagine) VALUES('" + name + "', " + bucati + ", " + 0 + ", " + 0 + ", " + 0 + ", " + 1 + ", '" + data + "', @images)";
+                        }
+                        
+
+
+                        SqlCommand command = SqlConn.connection.CreateCommand();
+                        command.CommandType = CommandType.Text;
+                        command.CommandText = query;
+                        command.Parameters.Add(new SqlParameter("@images", images));
+                        command.ExecuteNonQuery();
+
+
+                        Id_label.Text = "";
+                        Nume_textBox.Text = "";
+                        Bucati_textBox.Text = "";
+                        DataExpirarii_Picker.Text = "";
+                        Tip_comboBox.SelectedIndex = -1;
+                        Imagine_pictureBox.Image = null;
+                        Imagine_pictureBox.ImageLocation = "";
+                        imgLocation = "";
+
+                        fillListbox("SELECT Nume FROM Medicamente");
+
+
+                        SqlConn.CloseConn();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Eroare! Nu ai ales poza!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
                 }
                 else
                 {
-                    query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 0 + ", Ceai = " + 0 + ", Spray = " + 1 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
+                    SqlConn.OpenConn();
+                    int id = Int32.Parse(Id_label.Text);
+                    string name = Nume_textBox.Text;
+                    string bucati = Bucati_textBox.Text;
+                    string data = DataExpirarii_Picker.Text;
+                    string text = Tip_comboBox.Text;
+                    string query = "";
+
+                    byte[] images = null;
+                    try
+                    {
+                        FileStream stream = new FileStream(imgLocation, FileMode.Open, FileAccess.Read);
+                        BinaryReader binaryReader = new BinaryReader(stream);
+                        images = binaryReader.ReadBytes((int)stream.Length);
+                        if (text.Equals("Pastila"))
+                        {
+                            query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 1 + ", Crema = " + 0 + ", Ceai = " + 0 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "', Imagine = @images WHERE Id =" + id;
+
+                        }
+                        else if (text.Equals("Crema"))
+                        {
+                            query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 1 + ", Ceai = " + 0 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "', Imagine = @images WHERE Id =" + id;
+                        }
+                        else if (text.Equals("Ceai"))
+                        {
+                            query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 0 + ", Ceai = " + 1 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "', Imagine = @images WHERE Id =" + id;
+                        }
+                        else
+                        {
+                            query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 0 + ", Ceai = " + 0 + ", Spray = " + 1 + ", DataExpirarii = '" + data + "', Imagine = @images WHERE Id =" + id;
+                        }
+
+                        SqlCommand command = SqlConn.connection.CreateCommand();
+                        command.CommandType = CommandType.Text;
+                        command.CommandText = query;
+                        command.Parameters.Add(new SqlParameter("@images", images));
+                        command.ExecuteNonQuery();
+                        SqlConn.CloseConn();
+                    }
+                    catch
+                    {
+                        if (text.Equals("Pastila"))
+                        {
+                            query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 1 + ", Crema = " + 0 + ", Ceai = " + 0 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
+
+                        }
+                        else if (text.Equals("Crema"))
+                        {
+                            query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 1 + ", Ceai = " + 0 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
+                        }
+                        else if (text.Equals("Ceai"))
+                        {
+                            query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 0 + ", Ceai = " + 1 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
+                        }
+                        else
+                        {
+                            query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 0 + ", Ceai = " + 0 + ", Spray = " + 1 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
+                        }
+
+                        SqlCommand command = SqlConn.connection.CreateCommand();
+                        command.CommandType = CommandType.Text;
+                        command.CommandText = query;
+                        command.ExecuteNonQuery();
+                        SqlConn.CloseConn();
+                    }
+
+
+                    
+
+                    Id_label.Text = "";
+                    Nume_textBox.Text = "";
+                    Bucati_textBox.Text = "";
+                    DataExpirarii_Picker.Text = "";
+                    Tip_comboBox.SelectedIndex = -1;
+                    Imagine_pictureBox.Image = null;
+                    Imagine_pictureBox.ImageLocation = "";
+                    imgLocation = "";
+
+
+                    Delete_button.Enabled = false;
+                    Update_button.Text = "Add";
+
+                    fillListbox("SELECT Nume FROM Medicamente");
+
+                    SqlConn.CloseConn();
+
                 }
 
-                SqlCommand command = SqlConn.connection.CreateCommand();
-                command.CommandType = CommandType.Text;
-                command.CommandText = query;
-                command.ExecuteNonQuery();
-                SqlConn.CloseConn();
-
-                Id_textBox.Text = "";
-                Nume_textBox.Text = "";
-                Bucati_textBox.Text = "";
-                DataExpirarii_Picker.Text = "";
-                Tip_comboBox.SelectedIndex = -1;
-                Imagine_pictureBox.Image = null;
-                Imagine_pictureBox.ImageLocation = "";
-                imgLocation = "";
-
-                fillListbox("SELECT Nume FROM Medicamente");
-
-
-                SqlConn.CloseConn();
             }
-            
-            
+
+
         }
 
         private void Upload_button_Upgrade_Click(object sender, EventArgs e)
@@ -257,8 +295,8 @@ namespace Medicamente
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 imgLocation = dialog.FileName.ToString();
-                Imagine_Upgrade_pictureBox.ImageLocation = imgLocation;
-                Imagine_Upgrade_pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                Imagine_pictureBox.ImageLocation = imgLocation;
+                Imagine_pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             }
         }
 
@@ -276,7 +314,7 @@ namespace Medicamente
             else
             {
                 string query = "SELECT * FROM Medicamente WHERE Nume LIKE '" + Filtru_textBox.Text + "%'";
-                
+
                 fillListbox(query);
             }
 
@@ -285,7 +323,7 @@ namespace Medicamente
         private void deleteSelected()
         {
             SqlConn.OpenConn();
-            int id = Int32.Parse(Id_textBox.Text);
+            int id = Int32.Parse(Id_label.Text);
             string query = "DELETE FROM Medicamente WHERE Id =" + id;
 
             SqlCommand command = SqlConn.connection.CreateCommand();
@@ -295,12 +333,12 @@ namespace Medicamente
 
             SqlConn.CloseConn();
 
-            Id_textBox.Text = "";
+            Id_label.Text = "";
             Nume_textBox.Text = "";
             Bucati_textBox.Text = "";
             DataExpirarii_Picker.Text = "";
             Tip_comboBox.SelectedIndex = -1;
-            Imagine_pictureBox.Image = null; 
+            Imagine_pictureBox.Image = null;
 
             fillListbox("SELECT Nume FROM Medicamente");
         }
@@ -324,7 +362,7 @@ namespace Medicamente
             {
                 listBoxMedicamente.Items.Add(r["Nume"].ToString());
             }
-            
+
             SqlConn.CloseConn();
         }
 
@@ -355,19 +393,24 @@ namespace Medicamente
                     fillListbox("SELECT * FROM Medicamente WHERE Nume LIKE '" + Filtru_textBox.Text + "%'");
             }
 
-            Id_textBox.ReadOnly = true;
         }
 
-        private void listBox1_MouseDown(object sender, MouseEventArgs e)
+        private void listBoxMedicamente_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Y > listBoxMedicamente.ItemHeight*listBoxMedicamente.Items.Count){
+            if (e.Y > listBoxMedicamente.ItemHeight * listBoxMedicamente.Items.Count)
+            {
                 listBoxMedicamente.SelectedItems.Clear();
+                Id_label.Text = "";
                 Nume_textBox.Text = "";
                 Bucati_textBox.Text = "";
                 DataExpirarii_Picker.Text = "";
                 Tip_comboBox.SelectedIndex = -1;
                 Imagine_pictureBox.Image = null;
+                if (Update_button.Text.Equals("Add"))
+                {
+                    Update_button.Text = "Update";
+                }
             }
         }
-    }   
+    }
 }
