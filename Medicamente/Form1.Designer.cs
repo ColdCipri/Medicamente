@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.medicament_Group = new System.Windows.Forms.GroupBox();
+            this.Restart_button = new System.Windows.Forms.Button();
             this.ID_text_label = new System.Windows.Forms.Label();
             this.SortareAlfabetica_CheckBox = new System.Windows.Forms.CheckBox();
             this.SortareAlfabetica_label = new System.Windows.Forms.Label();
@@ -48,13 +49,16 @@
             this.Bucati_textBox = new System.Windows.Forms.TextBox();
             this.Nume_textBox = new System.Windows.Forms.TextBox();
             this.listBoxMedicamente = new System.Windows.Forms.ListBox();
-            this.Restart_button = new System.Windows.Forms.Button();
+            this.FiltruExpirat_label = new System.Windows.Forms.Label();
+            this.MedicamenteExpirate_checkBox = new System.Windows.Forms.CheckBox();
             this.medicament_Group.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Imagine_pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // medicament_Group
             // 
+            this.medicament_Group.Controls.Add(this.MedicamenteExpirate_checkBox);
+            this.medicament_Group.Controls.Add(this.FiltruExpirat_label);
             this.medicament_Group.Controls.Add(this.Restart_button);
             this.medicament_Group.Controls.Add(this.ID_text_label);
             this.medicament_Group.Controls.Add(this.SortareAlfabetica_CheckBox);
@@ -77,10 +81,20 @@
             this.medicament_Group.Controls.Add(this.listBoxMedicamente);
             this.medicament_Group.Location = new System.Drawing.Point(22, 20);
             this.medicament_Group.Name = "medicament_Group";
-            this.medicament_Group.Size = new System.Drawing.Size(942, 508);
+            this.medicament_Group.Size = new System.Drawing.Size(885, 585);
             this.medicament_Group.TabIndex = 0;
             this.medicament_Group.TabStop = false;
             this.medicament_Group.Text = "Medicament";
+            // 
+            // Restart_button
+            // 
+            this.Restart_button.Location = new System.Drawing.Point(307, 350);
+            this.Restart_button.Name = "Restart_button";
+            this.Restart_button.Size = new System.Drawing.Size(112, 43);
+            this.Restart_button.TabIndex = 35;
+            this.Restart_button.Text = "Restart";
+            this.Restart_button.UseVisualStyleBackColor = true;
+            this.Restart_button.Click += new System.EventHandler(this.Restart_button_Click);
             // 
             // ID_text_label
             // 
@@ -160,10 +174,10 @@
             this.Filtru_textBox.TabIndex = 46;
             this.Filtru_textBox.TextChanged += new System.EventHandler(this.Filtru_textBox_TextChanged);
             // 
-            // Upgrade_button
+            // Update_button
             // 
             this.Update_button.Location = new System.Drawing.Point(307, 216);
-            this.Update_button.Name = "Upgrade_button";
+            this.Update_button.Name = "Update_button";
             this.Update_button.Size = new System.Drawing.Size(112, 43);
             this.Update_button.TabIndex = 34;
             this.Update_button.Text = "Update";
@@ -188,7 +202,13 @@
             "Pastila",
             "Crema",
             "Ceai",
-            "Spray"});
+            "Spray",
+            "Sirop",
+            "Supozitor",
+            "Picaturi",
+            "Gel",
+            "Efervescent",
+            "Null"});
             this.Tip_comboBox.Location = new System.Drawing.Point(757, 84);
             this.Tip_comboBox.Name = "Tip_comboBox";
             this.Tip_comboBox.Size = new System.Drawing.Size(105, 24);
@@ -203,9 +223,9 @@
             // 
             // Imagine_pictureBox
             // 
-            this.Imagine_pictureBox.Location = new System.Drawing.Point(519, 204);
+            this.Imagine_pictureBox.Location = new System.Drawing.Point(490, 145);
             this.Imagine_pictureBox.Name = "Imagine_pictureBox";
-            this.Imagine_pictureBox.Size = new System.Drawing.Size(417, 281);
+            this.Imagine_pictureBox.Size = new System.Drawing.Size(372, 247);
             this.Imagine_pictureBox.TabIndex = 19;
             this.Imagine_pictureBox.TabStop = false;
             // 
@@ -265,22 +285,32 @@
             this.listBoxMedicamente.SelectedIndexChanged += new System.EventHandler(this.listBoxMedicamente_SelectedIndexChanged);
             this.listBoxMedicamente.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBoxMedicamente_MouseDown);
             // 
-            // Restart_button
+            // FiltruExpirat_label
             // 
-            this.Restart_button.Location = new System.Drawing.Point(307, 350);
-            this.Restart_button.Name = "Restart_button";
-            this.Restart_button.Size = new System.Drawing.Size(112, 43);
-            this.Restart_button.TabIndex = 35;
-            this.Restart_button.Text = "Restart";
-            this.Restart_button.UseVisualStyleBackColor = true;
-            this.Restart_button.Click += new System.EventHandler(this.Restart_button_Click);
+            this.FiltruExpirat_label.AutoSize = true;
+            this.FiltruExpirat_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FiltruExpirat_label.Location = new System.Drawing.Point(11, 505);
+            this.FiltruExpirat_label.Name = "FiltruExpirat_label";
+            this.FiltruExpirat_label.Size = new System.Drawing.Size(251, 29);
+            this.FiltruExpirat_label.TabIndex = 51;
+            this.FiltruExpirat_label.Text = "Medicamente expirate";
+            // 
+            // MedicamenteExpirate_checkBox
+            // 
+            this.MedicamenteExpirate_checkBox.AutoSize = true;
+            this.MedicamenteExpirate_checkBox.Location = new System.Drawing.Point(278, 516);
+            this.MedicamenteExpirate_checkBox.Name = "MedicamenteExpirate_checkBox";
+            this.MedicamenteExpirate_checkBox.Size = new System.Drawing.Size(18, 17);
+            this.MedicamenteExpirate_checkBox.TabIndex = 52;
+            this.MedicamenteExpirate_checkBox.UseVisualStyleBackColor = true;
+            this.MedicamenteExpirate_checkBox.CheckedChanged += new System.EventHandler(this.MedicamenteExpirate_checkBox_CheckedChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(976, 771);
+            this.ClientSize = new System.Drawing.Size(925, 625);
             this.Controls.Add(this.medicament_Group);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -319,6 +349,8 @@
         private System.Windows.Forms.CheckBox SortareAlfabetica_CheckBox;
         private System.Windows.Forms.Label SortareAlfabetica_label;
         private System.Windows.Forms.Label ID_text_label;
+        private System.Windows.Forms.Label FiltruExpirat_label;
+        private System.Windows.Forms.CheckBox MedicamenteExpirate_checkBox;
     }
 }
 

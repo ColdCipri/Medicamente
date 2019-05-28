@@ -17,6 +17,11 @@ namespace Medicamente
     {
         string imgLocation = "";
         DataTable dataTable = new DataTable();
+        string selectName = "SELECT Nume FROM Medicamente";
+        string filterData = " DataExpirarii < (select GETDATE())";
+        string orderName = " ORDER BY Nume";
+        string insertString = "INSERT INTO Medicamente(Nume, Buc, Tip, DataExpirarii, Imagine)";
+        string deleteString = "DELETE FROM Medicamente";
 
         public Form1()
         {
@@ -27,7 +32,7 @@ namespace Medicamente
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            fillListbox("SELECT Nume FROM Medicamente");
+            fillListbox(selectName);
             Delete_button.Enabled = false;
             Update_button.Text = "Add";
         }
@@ -87,21 +92,45 @@ namespace Medicamente
                     Bucati_textBox.Text = r["Buc"].ToString();
                     DataExpirarii_Picker.Text = r["DataExpirarii"].ToString();
                     Imagine_pictureBox.Image = Image.FromStream(new MemoryStream((byte[])r["Imagine"]));
-                    if (r["Pastila"].ToString().Equals("True"))
+                    if (r["Tip"].ToString().Equals("Pastila"))
                     {
                         Tip_comboBox.SelectedIndex = 0;
                     }
-                    else if (r["Crema"].ToString().Equals("True"))
+                    else if (r["Tip"].ToString().Equals("Crema"))
                     {
                         Tip_comboBox.SelectedIndex = 1;
                     }
-                    else if (r["Ceai"].ToString().Equals("True"))
+                    else if (r["Tip"].ToString().Equals("Ceai"))
                     {
                         Tip_comboBox.SelectedIndex = 2;
                     }
-                    else
+                    else if (r["Tip"].ToString().Equals("Spray"))
                     {
                         Tip_comboBox.SelectedIndex = 3;
+                    }
+                    else if (r["Tip"].ToString().Equals("Sirop"))
+                    {
+                        Tip_comboBox.SelectedIndex = 4;
+                    }
+                    else if (r["Tip"].ToString().Equals("Supozitor"))
+                    {
+                        Tip_comboBox.SelectedIndex = 5;
+                    }
+                    else if (r["Tip"].ToString().Equals("Picaturi"))
+                    {
+                        Tip_comboBox.SelectedIndex = 6;
+                    }
+                    else if (r["Tip"].ToString().Equals("Gel"))
+                    {
+                        Tip_comboBox.SelectedIndex = 7;
+                    }
+                    else if (r["Tip"].ToString().Equals("Efervescent"))
+                    {
+                        Tip_comboBox.SelectedIndex = 8;
+                    }
+                    else
+                    {
+                        Tip_comboBox.SelectedIndex = 9;
                     }
                 }
                 Imagine_pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -132,7 +161,7 @@ namespace Medicamente
                 MessageBox.Show("Eroare! Minim un camp este gol!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
-                if (Id_label.Text.Equals(""))//HAVENT DONE UPDATE WITH PICTURE
+                if (Id_label.Text.Equals(""))
                 {
                     try
                     {
@@ -144,27 +173,10 @@ namespace Medicamente
                         string name = Nume_textBox.Text;
                         string bucati = Bucati_textBox.Text;
                         string data = DataExpirarii_Picker.Text;
-                        string text = Tip_comboBox.Text;
+                        string tip = Tip_comboBox.Text;
                         string query = "";
 
-                        if (text.Equals("Pastila"))
-                        {
-                            query = "INSERT INTO Medicamente(Nume, Buc, Pastila, Crema, Ceai, Spray, DataExpirarii, Imagine) VALUES('" + name + "', " + bucati + ", " + 1 + ", " + 0 + ", " + 0 + ", " + 0 + ", '" + data + "', @images)";
-                        }
-                        else if (text.Equals("Crema"))
-                        {
-                            query = "INSERT INTO Medicamente(Nume, Buc, Pastila, Crema, Ceai, Spray, DataExpirarii, Imagine) VALUES('" + name + "', " + bucati + ", " + 0 + ", " + 1 + ", " + 0 + ", " + 0 + ", '" + data + "', @images)";
-                        }
-                        else if (text.Equals("Ceai"))
-                        {
-                            query = "INSERT INTO Medicamente(Nume, Buc, Pastila, Crema, Ceai, Spray, DataExpirarii, Imagine) VALUES('" + name + "', " + bucati + ", " + 0 + ", " + 0 + ", " + 1 + ", " + 0 + ", '" + data + "', @images)";
-                        }
-                        else if (text.Equals("Spray"))
-                        {
-                            query = "INSERT INTO Medicamente(Nume, Buc, Pastila, Crema, Ceai, Spray, DataExpirarii, Imagine) VALUES('" + name + "', " + bucati + ", " + 0 + ", " + 0 + ", " + 0 + ", " + 1 + ", '" + data + "', @images)";
-                        }
-                        
-
+                        query = insertString + " VALUES('" + name + "', " + bucati + ", '" + tip + "', '" + data + "', @images)";
 
                         SqlCommand command = SqlConn.connection.CreateCommand();
                         command.CommandType = CommandType.Text;
@@ -182,7 +194,7 @@ namespace Medicamente
                         Imagine_pictureBox.ImageLocation = "";
                         imgLocation = "";
 
-                        fillListbox("SELECT Nume FROM Medicamente");
+                        fillListbox(selectName);
 
 
                         SqlConn.CloseConn();
@@ -200,7 +212,7 @@ namespace Medicamente
                     string name = Nume_textBox.Text;
                     string bucati = Bucati_textBox.Text;
                     string data = DataExpirarii_Picker.Text;
-                    string text = Tip_comboBox.Text;
+                    string tip = Tip_comboBox.Text;
                     string query = "";
 
                     byte[] images = null;
@@ -209,23 +221,8 @@ namespace Medicamente
                         FileStream stream = new FileStream(imgLocation, FileMode.Open, FileAccess.Read);
                         BinaryReader binaryReader = new BinaryReader(stream);
                         images = binaryReader.ReadBytes((int)stream.Length);
-                        if (text.Equals("Pastila"))
-                        {
-                            query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 1 + ", Crema = " + 0 + ", Ceai = " + 0 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "', Imagine = @images WHERE Id =" + id;
 
-                        }
-                        else if (text.Equals("Crema"))
-                        {
-                            query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 1 + ", Ceai = " + 0 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "', Imagine = @images WHERE Id =" + id;
-                        }
-                        else if (text.Equals("Ceai"))
-                        {
-                            query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 0 + ", Ceai = " + 1 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "', Imagine = @images WHERE Id =" + id;
-                        }
-                        else
-                        {
-                            query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 0 + ", Ceai = " + 0 + ", Spray = " + 1 + ", DataExpirarii = '" + data + "', Imagine = @images WHERE Id =" + id;
-                        }
+                        query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Tip = '" + tip + ", DataExpirarii = '" + data + "', Imagine = @images WHERE Id =" + id;
 
                         SqlCommand command = SqlConn.connection.CreateCommand();
                         command.CommandType = CommandType.Text;
@@ -236,23 +233,7 @@ namespace Medicamente
                     }
                     catch
                     {
-                        if (text.Equals("Pastila"))
-                        {
-                            query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 1 + ", Crema = " + 0 + ", Ceai = " + 0 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
-
-                        }
-                        else if (text.Equals("Crema"))
-                        {
-                            query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 1 + ", Ceai = " + 0 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
-                        }
-                        else if (text.Equals("Ceai"))
-                        {
-                            query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 0 + ", Ceai = " + 1 + ", Spray = " + 0 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
-                        }
-                        else
-                        {
-                            query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Pastila = " + 0 + ", Crema = " + 0 + ", Ceai = " + 0 + ", Spray = " + 1 + ", DataExpirarii = '" + data + "' WHERE Id =" + id;
-                        }
+                        query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Tip = '" + tip + "', DataExpirarii = '" + data + "' WHERE Id =" + id;
 
                         SqlCommand command = SqlConn.connection.CreateCommand();
                         command.CommandType = CommandType.Text;
@@ -277,7 +258,7 @@ namespace Medicamente
                     Delete_button.Enabled = false;
                     Update_button.Text = "Add";
 
-                    fillListbox("SELECT Nume FROM Medicamente");
+                    fillListbox(selectName);
 
                     SqlConn.CloseConn();
 
@@ -309,13 +290,13 @@ namespace Medicamente
         {
             if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
             {
-                fillListbox("SELECT Nume FROM Medicamente");
+                fillListbox(selectName);
             }
             else
             {
-                string query = "SELECT * FROM Medicamente WHERE Nume LIKE '" + Filtru_textBox.Text + "%'";
+                string filterName = "Nume LIKE '" + Filtru_textBox.Text + "%'";
 
-                fillListbox(query);
+                fillListbox(selectName + " WHERE " + filterName);
             }
 
         }
@@ -324,7 +305,7 @@ namespace Medicamente
         {
             SqlConn.OpenConn();
             int id = Int32.Parse(Id_label.Text);
-            string query = "DELETE FROM Medicamente WHERE Id =" + id;
+            string query = deleteString + " WHERE Id =" + id;
 
             SqlCommand command = SqlConn.connection.CreateCommand();
             command.CommandType = CommandType.Text;
@@ -340,7 +321,7 @@ namespace Medicamente
             Tip_comboBox.SelectedIndex = -1;
             Imagine_pictureBox.Image = null;
 
-            fillListbox("SELECT Nume FROM Medicamente");
+            fillListbox(selectName);
         }
 
         private void fillListbox(string query)
@@ -366,11 +347,6 @@ namespace Medicamente
             SqlConn.CloseConn();
         }
 
-        private void Bucati_textbox_Upgrade_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
-        }
-
         private void Bucati_textBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
@@ -381,16 +357,53 @@ namespace Medicamente
             if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
             {
                 if (SortareAlfabetica_CheckBox.Checked == true)
-                    fillListbox("SELECT Nume FROM Medicamente ORDER BY Nume");
+                {
+                    if (MedicamenteExpirate_checkBox.Checked == true)
+                    {
+                        fillListbox(selectName + " WHERE " + filterData + orderName);
+                    }
+                    else
+                    {
+                        fillListbox(selectName + orderName);
+                    }
+                }
                 else
-                    fillListbox("SELECT Nume FROM Medicamente");
+                {
+                    if (MedicamenteExpirate_checkBox.Checked == true)
+                    {
+                        fillListbox(selectName + " WHERE " + filterData);
+                    }
+                    else
+                    {
+                        fillListbox(selectName);
+                    }
+                }
             }
             else
             {
+                string filterName = "Nume LIKE '" + Filtru_textBox.Text + "%'";
                 if (SortareAlfabetica_CheckBox.Checked == true)
-                    fillListbox("SELECT * FROM Medicamente WHERE Nume LIKE '" + Filtru_textBox.Text + "%' ORDER BY Nume");
+                {
+                    if (MedicamenteExpirate_checkBox.Checked == true)
+                    {
+                        fillListbox(selectName + " WHERE " + filterName + " AND " + filterData + orderName);
+                    }
+                    else
+                    {
+                        fillListbox(selectName + " WHERE " + filterName + orderName);
+                    }
+                }
                 else
-                    fillListbox("SELECT * FROM Medicamente WHERE Nume LIKE '" + Filtru_textBox.Text + "%'");
+                {
+                    if (MedicamenteExpirate_checkBox.Checked == true)
+                    {
+                        fillListbox(selectName + " WHERE " + filterName + " AND " + filterData);
+                    }
+                    else
+                    {
+                        fillListbox(selectName + " WHERE " + filterName);
+                    }
+                }
             }
 
         }
@@ -410,6 +423,62 @@ namespace Medicamente
                 {
                     Update_button.Text = "Update";
                 }
+            }
+        }
+
+        private void MedicamenteExpirate_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
+            {
+                if (MedicamenteExpirate_checkBox.Checked == true)
+                {
+                    if (SortareAlfabetica_CheckBox.Checked == true)
+                    {
+                        fillListbox(selectName + " WHERE " + filterData + orderName);
+                    }
+                    else
+                    {
+                        fillListbox(selectName + " WHERE " + filterData);
+                    }
+                }
+                else
+                {
+                    if (SortareAlfabetica_CheckBox.Checked == true)
+                    {
+                        fillListbox(selectName + orderName);
+                    }
+                    else
+                    {
+                        fillListbox(selectName);
+                    }
+                }
+            }
+            else
+            {
+                string filterName = "Nume LIKE '" + Filtru_textBox.Text + "%'";
+                if (MedicamenteExpirate_checkBox.Checked == true)
+                {
+                    if (SortareAlfabetica_CheckBox.Checked == true)
+                    {
+                        fillListbox(selectName + " WHERE " + filterName + " AND " + filterData + orderName);
+                    }
+                    else
+                    {
+                        fillListbox(selectName + " WHERE " + filterName + " AND " + filterData);
+                    }
+                }
+                else
+                {
+                    if (SortareAlfabetica_CheckBox.Checked == true)
+                    {
+                        fillListbox(selectName + " WHERE " + filterName + orderName);
+                    }
+                    else
+                    {
+                        fillListbox(selectName + " WHERE " + filterName);
+                    }
+                }
+                
             }
         }
     }
