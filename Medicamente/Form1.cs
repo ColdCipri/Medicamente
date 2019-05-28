@@ -35,7 +35,7 @@ namespace Medicamente
 
         private void Delete_button_Click(object sender, EventArgs e)
         {
-            if (this.listBox1.SelectedIndex >= 0)
+            if (this.listBoxMedicamente.SelectedIndex >= 0)
             {
                 deleteSelected();                
             }
@@ -54,10 +54,10 @@ namespace Medicamente
 
         private void Add_button_Click(object sender, EventArgs e)
         {
-            string name = Nume_textBox_Upgrade.Text;
-            string bucati = Bucati_textbox_Upgrade.Text;
-            string data = Upgrade_dateTimePicker.Text;
-            string text = comboBox_Upgrade.Text;
+            string name = Nume_Upgrade_textBox.Text;
+            string bucati = Bucati_Upgrade_textBox.Text;
+            string data = DataExpirarii_Upgrade_Picker.Text;
+            string text = Tip_Upgrade_comboBox.Text;
             if (name == "" || bucati == "" || data == "" || text == "")
                 MessageBox.Show("Eroare! Nu ati completat spatiile!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
@@ -99,12 +99,12 @@ namespace Medicamente
                     command.ExecuteNonQuery();
                     
 
-                    Nume_textBox_Upgrade.Text = "";
-                    Bucati_textbox_Upgrade.Text = "";
-                    Upgrade_dateTimePicker.Text = "";
-                    comboBox_Upgrade.SelectedIndex = -1;
-                    pictureBox_Add.Image = null;
-                    pictureBox_Add.ImageLocation = "";
+                    Nume_Upgrade_textBox.Text = "";
+                    Bucati_Upgrade_textBox.Text = "";
+                    DataExpirarii_Upgrade_Picker.Text = "";
+                    Tip_Upgrade_comboBox.SelectedIndex = -1;
+                    Imagine_Upgrade_pictureBox.Image = null;
+                    Imagine_Upgrade_pictureBox.ImageLocation = "";
                     imgLocation = "";
 
                     fillListbox("SELECT Nume FROM Medicamente");
@@ -127,15 +127,15 @@ namespace Medicamente
             
             SqlCommand command = SqlConn.connection.CreateCommand();
             command.CommandType = CommandType.Text;
-            if (listBox1.SelectedIndex == -1)
+            if (listBoxMedicamente.SelectedIndex == -1)
             {
-                listBox1.ClearSelected();
+                listBoxMedicamente.ClearSelected();
                 Delete_button.Enabled = false;
                 Upgrade_button.Enabled = false;
             }
             else
             {
-                command.CommandText = "SELECT * FROM Medicamente WHERE Nume = '" + listBox1.SelectedItem.ToString() + "'";
+                command.CommandText = "SELECT * FROM Medicamente WHERE Nume = '" + listBoxMedicamente.SelectedItem.ToString() + "'";
                 command.ExecuteNonQuery();
 
 
@@ -151,37 +151,37 @@ namespace Medicamente
                     Id_textBox.Text = r["Id"].ToString();
                     Nume_textBox.Text = r["Nume"].ToString();
                     Bucati_textBox.Text = r["Buc"].ToString();
-                    dateTimePicker1.Text = r["DataExpirarii"].ToString();
-                    pictureBox1.Image = Image.FromStream(new MemoryStream((byte[])r["Imagine"]));
+                    DataExpirarii_Picker.Text = r["DataExpirarii"].ToString();
+                    Imagine_pictureBox.Image = Image.FromStream(new MemoryStream((byte[])r["Imagine"]));
                     if (r["Pastila"].ToString().Equals("True"))
                     {
-                        comboBox.SelectedIndex = 0;
+                        Tip_comboBox.SelectedIndex = 0;
                     }
                     else if (r["Crema"].ToString().Equals("True"))
                     {
-                        comboBox.SelectedIndex = 1;
+                        Tip_comboBox.SelectedIndex = 1;
                     }
                     else if (r["Ceai"].ToString().Equals("True"))
                     {
-                        comboBox.SelectedIndex = 2;
+                        Tip_comboBox.SelectedIndex = 2;
                     }
                     else
                     {
-                        comboBox.SelectedIndex = 3;
+                        Tip_comboBox.SelectedIndex = 3;
                     }
                 }
 
                 Id_textBox.ReadOnly = true;
-                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                Imagine_pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
 
-                if (DateTime.Compare(dateTimePicker1.Value.Date, DateTime.Now.Date) < 0)
+                if (DateTime.Compare(DataExpirarii_Picker.Value.Date, DateTime.Now.Date) < 0)
                 {
                     if (MessageBox.Show("Acest medicament a expirat! \nDoresti sa il stergi?", "Expirat!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                     {
                         deleteSelected();
                     }
                 }
-                else if (DateTime.Compare(dateTimePicker1.Value.Date, DateTime.Now.Date) == 0)
+                else if (DateTime.Compare(DataExpirarii_Picker.Value.Date, DateTime.Now.Date) == 0)
                 {
                     MessageBox.Show("Acest medicament expira azi!", "Expirat!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
@@ -196,7 +196,7 @@ namespace Medicamente
         private void Upgrade_button_Click(object sender, EventArgs e)
         {
             
-            if (Id_textBox.Text == "" || Nume_textBox.Text == "" || Bucati_textBox.Text == "" || dateTimePicker1.Text == "")
+            if (Id_textBox.Text == "" || Nume_textBox.Text == "" || Bucati_textBox.Text == "" || DataExpirarii_Picker.Text == "")
                 MessageBox.Show("Eroare! Minim un camp este gol!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
@@ -204,8 +204,8 @@ namespace Medicamente
                 int id = Int32.Parse(Id_textBox.Text);
                 string name = Nume_textBox.Text;
                 string bucati = Bucati_textBox.Text;
-                string data = dateTimePicker1.Text;
-                string text = comboBox.Text;
+                string data = DataExpirarii_Picker.Text;
+                string text = Tip_comboBox.Text;
                 string query = "";
                 
                 if (text.Equals("Pastila"))
@@ -235,10 +235,10 @@ namespace Medicamente
                 Id_textBox.Text = "";
                 Nume_textBox.Text = "";
                 Bucati_textBox.Text = "";
-                dateTimePicker1.Text = "";
-                comboBox.SelectedIndex = -1;
-                pictureBox1.Image = null;
-                pictureBox1.ImageLocation = "";
+                DataExpirarii_Picker.Text = "";
+                Tip_comboBox.SelectedIndex = -1;
+                Imagine_pictureBox.Image = null;
+                Imagine_pictureBox.ImageLocation = "";
                 imgLocation = "";
 
                 fillListbox("SELECT Nume FROM Medicamente");
@@ -257,8 +257,8 @@ namespace Medicamente
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 imgLocation = dialog.FileName.ToString();
-                pictureBox_Add.ImageLocation = imgLocation;
-                pictureBox_Add.SizeMode = PictureBoxSizeMode.StretchImage;
+                Imagine_Upgrade_pictureBox.ImageLocation = imgLocation;
+                Imagine_Upgrade_pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             }
         }
 
@@ -298,9 +298,9 @@ namespace Medicamente
             Id_textBox.Text = "";
             Nume_textBox.Text = "";
             Bucati_textBox.Text = "";
-            dateTimePicker1.Text = "";
-            comboBox.SelectedIndex = -1;
-            pictureBox1.Image = null; 
+            DataExpirarii_Picker.Text = "";
+            Tip_comboBox.SelectedIndex = -1;
+            Imagine_pictureBox.Image = null; 
 
             fillListbox("SELECT Nume FROM Medicamente");
         }
@@ -308,7 +308,7 @@ namespace Medicamente
         private void fillListbox(string query)
         {
 
-            listBox1.Items.Clear();
+            listBoxMedicamente.Items.Clear();
             SqlConn.OpenConn();
             SqlCommand command = SqlConn.connection.CreateCommand();
 
@@ -322,7 +322,7 @@ namespace Medicamente
 
             foreach (DataRow r in dataTable.Rows)
             {
-                listBox1.Items.Add(r["Nume"].ToString());
+                listBoxMedicamente.Items.Add(r["Nume"].ToString());
             }
             
             SqlConn.CloseConn();
@@ -356,6 +356,18 @@ namespace Medicamente
             }
 
             Id_textBox.ReadOnly = true;
+        }
+
+        private void listBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Y > listBoxMedicamente.ItemHeight*listBoxMedicamente.Items.Count){
+                listBoxMedicamente.SelectedItems.Clear();
+                Nume_textBox.Text = "";
+                Bucati_textBox.Text = "";
+                DataExpirarii_Picker.Text = "";
+                Tip_comboBox.SelectedIndex = -1;
+                Imagine_pictureBox.Image = null;
+            }
         }
     }   
 }
