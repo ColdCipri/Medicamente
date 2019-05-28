@@ -206,11 +206,12 @@ namespace Medicamente
                         BinaryReader binaryReader = new BinaryReader(stream);
                         images = binaryReader.ReadBytes((int)stream.Length);
 
-                        query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Tip = '" + tip + ", DataExpirarii = '" + data + "', Imagine = (SELECT BulkColumn FROM Openrowset(Bulk '" + imgLocation + "', Single_Blob) as img ) WHERE Id =" + id;
+                        query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = " + bucati + ", Tip = '" + tip + "', DataExpirarii = '" + data + "', Imagine = @images WHERE Id =" + id;
                         SqlCommand command = SqlConn.connection.CreateCommand();
                         command.CommandType = CommandType.Text;
                         command.CommandText = query;
                         command.Parameters.Add(new SqlParameter("@images", images));
+
                         command.ExecuteNonQuery();
                         SqlConn.CloseConn();
                     }
@@ -239,9 +240,7 @@ namespace Medicamente
                     Update_button.Text = "Adauga";
 
                     fillListbox(selectName);
-
-                    SqlConn.CloseConn();
-
+                    
                 }
 
             }
