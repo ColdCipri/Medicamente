@@ -34,7 +34,6 @@ namespace Medicamente
         {
             fillListbox(selectName);
             Delete_button.Enabled = false;
-            Update_button.Text = "Adauga";
         }
 
         private void listBoxMedicamente_SelectedIndexChanged(object sender, EventArgs e)
@@ -454,6 +453,9 @@ namespace Medicamente
             DataExpirarii_Picker.Text = "";
             Tip_comboBox.SelectedIndex = -1;
             Imagine_pictureBox.Image = null;
+
+            Delete_button.Enabled = false;
+            Update_button.Text = "Adauga";
 
             fillListbox(selectName);
         }

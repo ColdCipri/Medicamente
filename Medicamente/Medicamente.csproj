@@ -133,6 +133,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Elegantthemes-Beautiful-Flat-Document.ico" />
     <Content Include="Input.txt" />
     <Content Include="Medicamente query.sql" />
   </ItemGroup>
