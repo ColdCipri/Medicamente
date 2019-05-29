@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.medicament_Group = new System.Windows.Forms.GroupBox();
+            this.exit_button = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.Descriere_label = new System.Windows.Forms.Label();
             this.MedicamenteExpirate_checkBox = new System.Windows.Forms.CheckBox();
             this.FiltruExpirat_label = new System.Windows.Forms.Label();
             this.Restart_button = new System.Windows.Forms.Button();
@@ -52,14 +55,15 @@
             this.Bucati_textBox = new System.Windows.Forms.TextBox();
             this.Nume_textBox = new System.Windows.Forms.TextBox();
             this.listBoxMedicamente = new System.Windows.Forms.ListBox();
-            this.exit_button = new System.Windows.Forms.Button();
-            this.EasterEgg_button = new System.Windows.Forms.Button();
             this.medicament_Group.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Imagine_pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // medicament_Group
             // 
+            this.medicament_Group.Controls.Add(this.exit_button);
+            this.medicament_Group.Controls.Add(this.textBox1);
+            this.medicament_Group.Controls.Add(this.Descriere_label);
             this.medicament_Group.Controls.Add(this.MedicamenteExpirate_checkBox);
             this.medicament_Group.Controls.Add(this.FiltruExpirat_label);
             this.medicament_Group.Controls.Add(this.Restart_button);
@@ -82,12 +86,47 @@
             this.medicament_Group.Controls.Add(this.Bucati_textBox);
             this.medicament_Group.Controls.Add(this.Nume_textBox);
             this.medicament_Group.Controls.Add(this.listBoxMedicamente);
-            this.medicament_Group.Location = new System.Drawing.Point(12, 32);
+            this.medicament_Group.Location = new System.Drawing.Point(12, 3);
             this.medicament_Group.Name = "medicament_Group";
-            this.medicament_Group.Size = new System.Drawing.Size(885, 581);
+            this.medicament_Group.Size = new System.Drawing.Size(844, 610);
             this.medicament_Group.TabIndex = 0;
             this.medicament_Group.TabStop = false;
             this.medicament_Group.Text = "Medicament";
+            // 
+            // exit_button
+            // 
+            this.exit_button.Cursor = System.Windows.Forms.Cursors.Default;
+            this.exit_button.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.exit_button.FlatAppearance.BorderSize = 0;
+            this.exit_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.exit_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red;
+            this.exit_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.exit_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.exit_button.Location = new System.Drawing.Point(817, 0);
+            this.exit_button.Name = "exit_button";
+            this.exit_button.Size = new System.Drawing.Size(27, 23);
+            this.exit_button.TabIndex = 1;
+            this.exit_button.Text = "X";
+            this.exit_button.UseVisualStyleBackColor = true;
+            this.exit_button.Click += new System.EventHandler(this.exit_button_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(436, 127);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(217, 80);
+            this.textBox1.TabIndex = 54;
+            // 
+            // Descriere_label
+            // 
+            this.Descriere_label.AutoSize = true;
+            this.Descriere_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Descriere_label.Location = new System.Drawing.Point(306, 127);
+            this.Descriere_label.Name = "Descriere_label";
+            this.Descriere_label.Size = new System.Drawing.Size(124, 29);
+            this.Descriere_label.TabIndex = 53;
+            this.Descriere_label.Text = "Descriere:";
             // 
             // MedicamenteExpirate_checkBox
             // 
@@ -118,7 +157,7 @@
             this.Restart_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.Restart_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Restart_button.Font = new System.Drawing.Font("Microsoft Tai Le", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Restart_button.Location = new System.Drawing.Point(767, 532);
+            this.Restart_button.Location = new System.Drawing.Point(727, 561);
             this.Restart_button.Name = "Restart_button";
             this.Restart_button.Size = new System.Drawing.Size(112, 43);
             this.Restart_button.TabIndex = 35;
@@ -180,7 +219,7 @@
             this.Delete_button.BackColor = System.Drawing.Color.Gold;
             this.Delete_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.Delete_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Delete_button.Location = new System.Drawing.Point(311, 341);
+            this.Delete_button.Location = new System.Drawing.Point(307, 341);
             this.Delete_button.Name = "Delete_button";
             this.Delete_button.Size = new System.Drawing.Size(115, 51);
             this.Delete_button.TabIndex = 33;
@@ -194,7 +233,7 @@
             this.Upload_button_Upgrade.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.Upload_button_Upgrade.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Upload_button_Upgrade.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Upload_button_Upgrade.Location = new System.Drawing.Point(311, 129);
+            this.Upload_button_Upgrade.Location = new System.Drawing.Point(721, 148);
             this.Upload_button_Upgrade.Name = "Upload_button_Upgrade";
             this.Upload_button_Upgrade.Size = new System.Drawing.Size(115, 48);
             this.Upload_button_Upgrade.TabIndex = 31;
@@ -215,7 +254,7 @@
             this.Update_button.BackColor = System.Drawing.Color.Gold;
             this.Update_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.Update_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Update_button.Location = new System.Drawing.Point(311, 259);
+            this.Update_button.Location = new System.Drawing.Point(307, 260);
             this.Update_button.Name = "Update_button";
             this.Update_button.Size = new System.Drawing.Size(115, 51);
             this.Update_button.TabIndex = 34;
@@ -227,7 +266,7 @@
             // 
             this.Tip_label.AutoSize = true;
             this.Tip_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Tip_label.Location = new System.Drawing.Point(693, 79);
+            this.Tip_label.Location = new System.Drawing.Point(673, 79);
             this.Tip_label.Name = "Tip_label";
             this.Tip_label.Size = new System.Drawing.Size(55, 29);
             this.Tip_label.TabIndex = 45;
@@ -251,7 +290,7 @@
             "Gel",
             "Efervescent",
             "Null"});
-            this.Tip_comboBox.Location = new System.Drawing.Point(757, 84);
+            this.Tip_comboBox.Location = new System.Drawing.Point(731, 82);
             this.Tip_comboBox.Name = "Tip_comboBox";
             this.Tip_comboBox.Size = new System.Drawing.Size(105, 24);
             this.Tip_comboBox.TabIndex = 44;
@@ -265,7 +304,7 @@
             // 
             // Imagine_pictureBox
             // 
-            this.Imagine_pictureBox.Location = new System.Drawing.Point(490, 145);
+            this.Imagine_pictureBox.Location = new System.Drawing.Point(464, 237);
             this.Imagine_pictureBox.Name = "Imagine_pictureBox";
             this.Imagine_pictureBox.Size = new System.Drawing.Size(372, 247);
             this.Imagine_pictureBox.TabIndex = 19;
@@ -327,48 +366,14 @@
             this.listBoxMedicamente.SelectedIndexChanged += new System.EventHandler(this.listBoxMedicamente_SelectedIndexChanged);
             this.listBoxMedicamente.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBoxMedicamente_MouseDown);
             // 
-            // exit_button
-            // 
-            this.exit_button.Cursor = System.Windows.Forms.Cursors.Default;
-            this.exit_button.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.exit_button.FlatAppearance.BorderSize = 0;
-            this.exit_button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.exit_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red;
-            this.exit_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.exit_button.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.exit_button.Location = new System.Drawing.Point(872, 3);
-            this.exit_button.Name = "exit_button";
-            this.exit_button.Size = new System.Drawing.Size(27, 23);
-            this.exit_button.TabIndex = 1;
-            this.exit_button.Text = "X";
-            this.exit_button.UseVisualStyleBackColor = true;
-            this.exit_button.Click += new System.EventHandler(this.exit_button_Click);
-            // 
-            // EasterEgg_button
-            // 
-            this.EasterEgg_button.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.EasterEgg_button.Cursor = System.Windows.Forms.Cursors.No;
-            this.EasterEgg_button.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
-            this.EasterEgg_button.FlatAppearance.BorderSize = 0;
-            this.EasterEgg_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.EasterEgg_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.EasterEgg_button.Font = new System.Drawing.Font("Microsoft Tai Le", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EasterEgg_button.Location = new System.Drawing.Point(12, 3);
-            this.EasterEgg_button.Name = "EasterEgg_button";
-            this.EasterEgg_button.Size = new System.Drawing.Size(92, 23);
-            this.EasterEgg_button.TabIndex = 36;
-            this.EasterEgg_button.UseVisualStyleBackColor = false;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(899, 625);
+            this.ClientSize = new System.Drawing.Size(864, 625);
             this.ControlBox = false;
-            this.Controls.Add(this.EasterEgg_button);
-            this.Controls.Add(this.exit_button);
             this.Controls.Add(this.medicament_Group);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -379,6 +384,9 @@
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
             this.medicament_Group.ResumeLayout(false);
             this.medicament_Group.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Imagine_pictureBox)).EndInit();
@@ -412,7 +420,8 @@
         private System.Windows.Forms.Label FiltruExpirat_label;
         private System.Windows.Forms.CheckBox MedicamenteExpirate_checkBox;
         private System.Windows.Forms.Button exit_button;
-        private System.Windows.Forms.Button EasterEgg_button;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label Descriere_label;
     }
 }
 

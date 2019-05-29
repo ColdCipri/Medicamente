@@ -22,6 +22,8 @@ namespace Medicamente
         string orderName = " ORDER BY Nume";
         string insertString = "INSERT INTO Medicamente(Nume, Buc, Tip, DataExpirarii, Imagine)";
         string deleteString = "DELETE FROM Medicamente";
+        private bool mouseDown;
+        private Point lastLocation;
 
         public Form1()
         {
@@ -29,12 +31,19 @@ namespace Medicamente
             this.Text = SqlConn.myApp();
         }
 
+        //_____________________Code for filling listbox when app is loaded___________________________________________________
 
         private void Form1_Load(object sender, EventArgs e)
         {
             fillListbox(selectName);
             Delete_button.Enabled = false;
         }
+
+
+        //_____________________END OF Code for filling listbox when app is loaded____________________________________________
+
+
+        //_____________________Code for update textboxes by listbox selected item____________________________________________
 
         private void listBoxMedicamente_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -136,6 +145,12 @@ namespace Medicamente
                 SqlConn.CloseConn();
             }
         }
+
+
+        //_____________________END OF Code for update textboxes by listbox selected item_____________________________________
+
+
+        //___________________________________Code for Add/Upgrade button_____________________________________________________
 
         private void Upgrade_button_Click(object sender, EventArgs e)
         {
@@ -241,11 +256,14 @@ namespace Medicamente
                     fillListbox(selectName);
                     
                 }
-
             }
-
-
         }
+
+
+        //____________________________END OF Code for Add/Upgrade button_____________________________________________________
+
+
+        //_______________________________________Code for Delete button______________________________________________________
 
         private void Delete_button_Click(object sender, EventArgs e)
         {
@@ -254,9 +272,17 @@ namespace Medicamente
                 deleteSelected();
             }
             else
+            {
                 MessageBox.Show("Eroare! Nu sunt medicamente introduse!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+            }
         }
+
+
+        //_________________________________END OF Code for Delete button______________________________________________________
+
+
+        //_______________________________________Code for Restart button______________________________________________________
+
 
         private void Restart_button_Click(object sender, EventArgs e)
         {
@@ -266,6 +292,11 @@ namespace Medicamente
             childForm.ShowDialog();
         }
 
+
+        //________________________________END OF Code for Restart button______________________________________________________
+
+
+        //________________________________Code for Upload picture button______________________________________________________
 
         private void Upload_button_Upgrade_Click(object sender, EventArgs e)
         {
@@ -279,10 +310,10 @@ namespace Medicamente
             }
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            SqlConn.CloseConn();
-        }
+        //________________________________END OF Code for Upload picture button_________________________________________________
+
+
+        //________________________________Code for filter textbox_______________________________________________________________
 
         private void Filtru_textBox_TextChanged(object sender, EventArgs e)
         {
@@ -299,10 +330,20 @@ namespace Medicamente
 
         }
 
+        //________________________________END OF Code for filter textbox________________________________________________________
+
+
+        //________________________________Code for numbers input only___________________________________________________________
+
         private void Bucati_textBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
+
+        //________________________________END OF Code for numbers input only____________________________________________________
+
+
+        //________________________________Code for alphabetic sort of listbox___________________________________________________
 
         private void SortareAlfabetica_CheckBox_CheckedChanged(object sender, EventArgs e)
         {
@@ -360,6 +401,11 @@ namespace Medicamente
 
         }
 
+        //________________________________END OF Code for alphabetic sort of listbox____________________________________________
+
+
+        //________________________________Code for reset selecte item from listbox_______________________________________________
+
         private void listBoxMedicamente_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Y > listBoxMedicamente.ItemHeight * listBoxMedicamente.Items.Count)
@@ -377,6 +423,11 @@ namespace Medicamente
                 }
             }
         }
+
+        //________________________________END OF Code for reset selecte item from listbox________________________________________
+
+
+        //________________________________Code for filter by last date from listbox______________________________________________
 
         private void MedicamenteExpirate_checkBox_CheckedChanged(object sender, EventArgs e)
         {
@@ -434,6 +485,11 @@ namespace Medicamente
             }
         }
 
+        //________________________________END OF Code for filter by last date from listbox_______________________________________
+
+
+        //________________________________Function for delete selecte item from listbox___________________________________________
+
         private void deleteSelected()
         {
             SqlConn.OpenConn();
@@ -460,6 +516,11 @@ namespace Medicamente
             fillListbox(selectName);
         }
 
+        //________________________________END OF Function for delete selecte item from listbox____________________________________
+
+
+        //________________________________Function for fill listbox_______________________________________________________________
+
         private void fillListbox(string query)
         {
 
@@ -484,9 +545,44 @@ namespace Medicamente
             SqlConn.CloseConn();
         }
 
+        //________________________________END OF Function for fill listbox________________________________________________________
+
+
+        //________________________________Function for exit button________________________________________________________________
+
+
         private void exit_button_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
+        //________________________________END OF Function for fill listbox________________________________________________________
+
+        //________________________________Code for makig app move by mouse drag___________________________________________________
+
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseDown = true;
+            lastLocation = e.Location;
+        }
+
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                this.Location = new Point(
+                    (this.Location.X - lastLocation.X) + e.X, (this.Location.Y - lastLocation.Y) + e.Y);
+
+                this.Update();
+            }
+        }
+
+        private void Form1_MouseUp(object sender, MouseEventArgs e)
+        {
+            mouseDown = false;
+        }
+
+
+        //_____________________END OF Code for makig app move by mouse drag____________________________________________
     }
 }

@@ -18,3 +18,5 @@ INSERT INTO Medicamente(Nume, Buc, Tip, DataExpirarii, Imagine) VALUES ('Coldrex
 	SELECT BulkColumn 
 	FROM Openrowset( Bulk 'F:\Photos\Medicamente\coldrex.jpg', Single_Blob) as img )
 	 )
+
+INSERT INTO Medicamente(Nume, Buc, Tip, DataExpirarii) VALUES ('ABC',1,'Sirop','01-01-2020')
