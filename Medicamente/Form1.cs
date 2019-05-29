@@ -20,7 +20,7 @@ namespace Medicamente
         string selectName = "SELECT ID, Nume FROM Medicamente";
         string filterData = " DataExpirarii < (select GETDATE())";
         string orderName = " ORDER BY Nume";
-        string insertString = "INSERT INTO Medicamente(Nume, Buc, Tip, DataExpirarii, Imagine)";
+        string insertString = "INSERT INTO Medicamente(Nume, Buc, Tip, DataExpirarii, Imagine, SubstantaBaza, SubstBazaCantitate, Descriere)";
         string deleteString = "DELETE FROM Medicamente";
         private bool mouseDown;
         private Point lastLocation;
@@ -79,6 +79,9 @@ namespace Medicamente
                     Nume_textBox.Text = r["Nume"].ToString();
                     Bucati_textBox.Text = r["Buc"].ToString();
                     DataExpirarii_Picker.Text = r["DataExpirarii"].ToString();
+                    SubstantaBaza_textBox.Text = r["SubstantaBaza"].ToString();
+                    SubstBazaCantitate_textBox.Text = r["SubstBazaCantitate"].ToString();
+                    Descriere_textBox.Text = r["Descriere"].ToString();
                     try
                     {
                         Imagine_pictureBox.Image = Image.FromStream(new MemoryStream((byte[])r["Imagine"]));
@@ -155,10 +158,19 @@ namespace Medicamente
         private void Upgrade_button_Click(object sender, EventArgs e)
         {
 
-            if (Nume_textBox.Text == "" || Bucati_textBox.Text == "" || DataExpirarii_Picker.Text == "")
-                MessageBox.Show("Eroare! Minim un camp este gol!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (Nume_textBox.Text == "" || Bucati_textBox.Text == "" || DataExpirarii_Picker.Text == "" || Tip_comboBox.SelectedIndex == -1 || SubstantaBaza_textBox.Text == "" || SubstBazaCantitate_textBox.Text == "")
+                MessageBox.Show("Eroare! Cel putin un camp este gol!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
+                string name = Nume_textBox.Text;
+                string bucati = Bucati_textBox.Text;
+                string data = DataExpirarii_Picker.Text;
+                string tip = Tip_comboBox.Text;
+                string substBaza = SubstantaBaza_textBox.Text;
+                string substBazaCantitate = SubstBazaCantitate_textBox.Text;
+                string descriere = Descriere_textBox.Text;
+                string query = "";
+
                 if (Id_label.Text.Equals(""))
                 {
                     try
@@ -168,18 +180,20 @@ namespace Medicamente
                         FileStream stream = new FileStream(imgLocation, FileMode.Open, FileAccess.Read);
                         BinaryReader binaryReader = new BinaryReader(stream);
                         images = binaryReader.ReadBytes((int)stream.Length);
-                        string name = Nume_textBox.Text;
-                        string bucati = Bucati_textBox.Text;
-                        string data = DataExpirarii_Picker.Text;
-                        string tip = Tip_comboBox.Text;
-                        string query = "";
 
-                        query = insertString + " VALUES('" + name + "', " + bucati + ", '" + tip + "', '" + data + "', @images)";
+                        query = insertString + " VALUES(@name, @bucati, @tip, @data, @images, @substBaza, @substBazaCantitate, @descriere)";
 
                         SqlCommand command = SqlConn.connection.CreateCommand();
                         command.CommandType = CommandType.Text;
                         command.CommandText = query;
+                        command.Parameters.Add(new SqlParameter("@name", name));
+                        command.Parameters.Add(new SqlParameter("@bucati", bucati));
+                        command.Parameters.Add(new SqlParameter("@tip", tip));
+                        command.Parameters.Add(new SqlParameter("@data", data));
                         command.Parameters.Add(new SqlParameter("@images", images));
+                        command.Parameters.Add(new SqlParameter("@substBaza", substBaza));
+                        command.Parameters.Add(new SqlParameter("@substBazaCantitate", substBazaCantitate));
+                        command.Parameters.Add(new SqlParameter("@descriere", descriere));
                         command.ExecuteNonQuery();
 
 
@@ -188,6 +202,9 @@ namespace Medicamente
                         Bucati_textBox.Text = "";
                         DataExpirarii_Picker.Text = "";
                         Tip_comboBox.SelectedIndex = -1;
+                        SubstantaBaza_textBox.Text = "";
+                        SubstBazaCantitate_textBox.Text = "";
+                        Descriere_textBox.Text = "";
                         Imagine_pictureBox.Image = null;
                         Imagine_pictureBox.ImageLocation = "";
                         imgLocation = "";
@@ -206,13 +223,8 @@ namespace Medicamente
                 else
                 {
                     SqlConn.OpenConn();
-                    int id = Int32.Parse(Id_label.Text);
-                    string name = Nume_textBox.Text;
-                    string bucati = Bucati_textBox.Text;
-                    string data = DataExpirarii_Picker.Text;
-                    string tip = Tip_comboBox.Text;
-                    string query = "";
 
+                    int id = Int32.Parse(Id_label.Text);
                     try
                     {
                         byte[] images = null;
@@ -220,22 +232,41 @@ namespace Medicamente
                         BinaryReader binaryReader = new BinaryReader(stream);
                         images = binaryReader.ReadBytes((int)stream.Length);
 
-                        query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = " + bucati + ", Tip = '" + tip + "', DataExpirarii = '" + data + "', Imagine = @images WHERE Id =" + id;
+                        query = "UPDATE Medicamente SET Nume = @name, Buc = @bucati, Tip = @tip, DataExpirarii = @data, Imagine = @images, SubstantaBaza = @substBaza, SubstBazaCantitate = @substBazaCantitate, Descriere = @descriere WHERE Id = @id";
                         SqlCommand command = SqlConn.connection.CreateCommand();
                         command.CommandType = CommandType.Text;
                         command.CommandText = query;
+
+                        command.Parameters.Add(new SqlParameter("@name", name));
+                        command.Parameters.Add(new SqlParameter("@bucati", bucati));
+                        command.Parameters.Add(new SqlParameter("@tip", tip));
+                        command.Parameters.Add(new SqlParameter("@data", data));
                         command.Parameters.Add(new SqlParameter("@images", images));
+                        command.Parameters.Add(new SqlParameter("@substBaza", substBaza));
+                        command.Parameters.Add(new SqlParameter("@substBazaCantitate", substBazaCantitate));
+                        command.Parameters.Add(new SqlParameter("@descriere", descriere));
+                        command.Parameters.Add(new SqlParameter("@id", id));
 
                         command.ExecuteNonQuery();
                         SqlConn.CloseConn();
                     }
                     catch
                     {
-                        query = "UPDATE Medicamente SET Nume = '" + name + "', Buc = '" + bucati + "', Tip = '" + tip + "', DataExpirarii = '" + data + "' WHERE Id =" + id;
+                        query = "UPDATE Medicamente SET Nume = @name, Buc = @bucati, Tip = @tip, DataExpirarii = @data, SubstantaBaza = @substBaza, SubstBazaCantitate = @substBazaCantitate, Descriere = @descriere WHERE Id = @id";
 
                         SqlCommand command = SqlConn.connection.CreateCommand();
                         command.CommandType = CommandType.Text;
                         command.CommandText = query;
+
+                        command.Parameters.Add(new SqlParameter("@name", name));
+                        command.Parameters.Add(new SqlParameter("@bucati", bucati));
+                        command.Parameters.Add(new SqlParameter("@tip", tip));
+                        command.Parameters.Add(new SqlParameter("@data", data));
+                        command.Parameters.Add(new SqlParameter("@substBaza", substBaza));
+                        command.Parameters.Add(new SqlParameter("@substBazaCantitate", substBazaCantitate));
+                        command.Parameters.Add(new SqlParameter("@descriere", descriere));
+                        command.Parameters.Add(new SqlParameter("@id", id));
+
                         command.ExecuteNonQuery();
                         SqlConn.CloseConn();
                     }
@@ -317,15 +348,30 @@ namespace Medicamente
 
         private void Filtru_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
+            if (Filtru_comboBox.SelectedIndex == -1 || Filtru_comboBox.SelectedIndex == 0)
             {
-                fillListbox(selectName);
+
+                if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
+                {
+                    fillListbox(selectName);
+                }
+                else
+                {
+                    string filterName = "Nume LIKE '" + Filtru_textBox.Text + "%'";
+
+                    fillListbox(selectName + " WHERE " + filterName);
+                }
             }
             else
             {
-                string filterName = "Nume LIKE '" + Filtru_textBox.Text + "%'";
-
-                fillListbox(selectName + " WHERE " + filterName);
+                if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
+                {
+                    fillListbox(selectName);
+                }
+                else
+                {
+                    fillListbox(selectName + " WHERE " + "Descriere LIKE '%" + Filtru_textBox.Text + "%'");
+                }
             }
 
         }
@@ -339,6 +385,11 @@ namespace Medicamente
         {
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
+        
+        private void SubstBazaCantitate_textBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
+        }
 
         //________________________________END OF Code for numbers input only____________________________________________________
 
@@ -347,58 +398,114 @@ namespace Medicamente
 
         private void SortareAlfabetica_CheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
+            if (Filtru_comboBox.SelectedIndex == -1 || Filtru_comboBox.SelectedIndex == 0)
             {
-                if (SortareAlfabetica_CheckBox.Checked == true)
+                if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
                 {
-                    if (MedicamenteExpirate_checkBox.Checked == true)
+                    if (SortareAlfabetica_CheckBox.Checked == true)
                     {
-                        fillListbox(selectName + " WHERE " + filterData + orderName);
+                        if (MedicamenteExpirate_checkBox.Checked == true)
+                        {
+                            fillListbox(selectName + " WHERE " + filterData + orderName);
+                        }
+                        else
+                        {
+                            fillListbox(selectName + orderName);
+                        }
                     }
                     else
                     {
-                        fillListbox(selectName + orderName);
+                        if (MedicamenteExpirate_checkBox.Checked == true)
+                        {
+                            fillListbox(selectName + " WHERE " + filterData);
+                        }
+                        else
+                        {
+                            fillListbox(selectName);
+                        }
                     }
                 }
                 else
                 {
-                    if (MedicamenteExpirate_checkBox.Checked == true)
+                    string filterName = "Nume LIKE '" + Filtru_textBox.Text + "%'";
+                    if (SortareAlfabetica_CheckBox.Checked == true)
                     {
-                        fillListbox(selectName + " WHERE " + filterData);
+                        if (MedicamenteExpirate_checkBox.Checked == true)
+                        {
+                            fillListbox(selectName + " WHERE " + filterName + " AND " + filterData + orderName);
+                        }
+                        else
+                        {
+                            fillListbox(selectName + " WHERE " + filterName + orderName);
+                        }
                     }
                     else
                     {
-                        fillListbox(selectName);
+                        if (MedicamenteExpirate_checkBox.Checked == true)
+                        {
+                            fillListbox(selectName + " WHERE " + filterName + " AND " + filterData);
+                        }
+                        else
+                        {
+                            fillListbox(selectName + " WHERE " + filterName);
+                        }
                     }
                 }
             }
             else
             {
-                string filterName = "Nume LIKE '" + Filtru_textBox.Text + "%'";
-                if (SortareAlfabetica_CheckBox.Checked == true)
+                if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
                 {
-                    if (MedicamenteExpirate_checkBox.Checked == true)
+                    if (SortareAlfabetica_CheckBox.Checked == true)
                     {
-                        fillListbox(selectName + " WHERE " + filterName + " AND " + filterData + orderName);
+                        if (MedicamenteExpirate_checkBox.Checked == true)
+                        {
+                            fillListbox(selectName + " WHERE " + filterData + orderName);
+                        }
+                        else
+                        {
+                            fillListbox(selectName + orderName);
+                        }
                     }
                     else
                     {
-                        fillListbox(selectName + " WHERE " + filterName + orderName);
+                        if (MedicamenteExpirate_checkBox.Checked == true)
+                        {
+                            fillListbox(selectName + " WHERE " + filterData);
+                        }
+                        else
+                        {
+                            fillListbox(selectName);
+                        }
                     }
                 }
                 else
                 {
-                    if (MedicamenteExpirate_checkBox.Checked == true)
+                    string filterDescribe = "Descriere LIKE '%" + Filtru_textBox.Text + "%'";
+                    if (SortareAlfabetica_CheckBox.Checked == true)
                     {
-                        fillListbox(selectName + " WHERE " + filterName + " AND " + filterData);
+                        if (MedicamenteExpirate_checkBox.Checked == true)
+                        {
+                            fillListbox(selectName + " WHERE " + filterDescribe + " AND " + filterData + orderName);
+                        }
+                        else
+                        {
+                            fillListbox(selectName + " WHERE " + filterDescribe + orderName);
+                        }
                     }
                     else
                     {
-                        fillListbox(selectName + " WHERE " + filterName);
+                        if (MedicamenteExpirate_checkBox.Checked == true)
+                        {
+                            fillListbox(selectName + " WHERE " + filterDescribe + " AND " + filterData);
+                        }
+                        else
+                        {
+                            fillListbox(selectName + " WHERE " + filterDescribe);
+                        }
                     }
                 }
             }
-
         }
 
         //________________________________END OF Code for alphabetic sort of listbox____________________________________________
@@ -411,16 +518,23 @@ namespace Medicamente
             if (e.Y > listBoxMedicamente.ItemHeight * listBoxMedicamente.Items.Count)
             {
                 listBoxMedicamente.SelectedItems.Clear();
+
                 Id_label.Text = "";
                 Nume_textBox.Text = "";
                 Bucati_textBox.Text = "";
                 DataExpirarii_Picker.Text = "";
+                SubstantaBaza_textBox.Text = "";
+                SubstBazaCantitate_textBox.Text = "";
+                Descriere_textBox.Text = "";
                 Tip_comboBox.SelectedIndex = -1;
+
                 Imagine_pictureBox.Image = null;
                 if (Update_button.Text.Equals("Adauga"))
                 {
                     Update_button.Text = "Actualizare";
                 }
+
+                Filtru_comboBox.SelectedIndex = -1;
             }
         }
 
@@ -431,57 +545,113 @@ namespace Medicamente
 
         private void MedicamenteExpirate_checkBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
+            if (Filtru_comboBox.SelectedIndex == -1 || Filtru_comboBox.SelectedIndex == 0)
             {
-                if (MedicamenteExpirate_checkBox.Checked == true)
+                if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
                 {
-                    if (SortareAlfabetica_CheckBox.Checked == true)
+                    if (MedicamenteExpirate_checkBox.Checked == true)
                     {
-                        fillListbox(selectName + " WHERE " + filterData + orderName);
+                        if (SortareAlfabetica_CheckBox.Checked == true)
+                        {
+                            fillListbox(selectName + " WHERE " + filterData + orderName);
+                        }
+                        else
+                        {
+                            fillListbox(selectName + " WHERE " + filterData);
+                        }
                     }
                     else
                     {
-                        fillListbox(selectName + " WHERE " + filterData);
+                        if (SortareAlfabetica_CheckBox.Checked == true)
+                        {
+                            fillListbox(selectName + orderName);
+                        }
+                        else
+                        {
+                            fillListbox(selectName);
+                        }
                     }
                 }
                 else
                 {
-                    if (SortareAlfabetica_CheckBox.Checked == true)
+                    string filterName = "Nume LIKE '" + Filtru_textBox.Text + "%'";
+                    if (MedicamenteExpirate_checkBox.Checked == true)
                     {
-                        fillListbox(selectName + orderName);
+                        if (SortareAlfabetica_CheckBox.Checked == true)
+                        {
+                            fillListbox(selectName + " WHERE " + filterName + " AND " + filterData + orderName);
+                        }
+                        else
+                        {
+                            fillListbox(selectName + " WHERE " + filterName + " AND " + filterData);
+                        }
                     }
                     else
                     {
-                        fillListbox(selectName);
+                        if (SortareAlfabetica_CheckBox.Checked == true)
+                        {
+                            fillListbox(selectName + " WHERE " + filterName + orderName);
+                        }
+                        else
+                        {
+                            fillListbox(selectName + " WHERE " + filterName);
+                        }
                     }
                 }
             }
             else
             {
-                string filterName = "Nume LIKE '" + Filtru_textBox.Text + "%'";
-                if (MedicamenteExpirate_checkBox.Checked == true)
+                if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
                 {
-                    if (SortareAlfabetica_CheckBox.Checked == true)
+                    if (MedicamenteExpirate_checkBox.Checked == true)
                     {
-                        fillListbox(selectName + " WHERE " + filterName + " AND " + filterData + orderName);
+                        if (SortareAlfabetica_CheckBox.Checked == true)
+                        {
+                            fillListbox(selectName + " WHERE " + filterData + orderName);
+                        }
+                        else
+                        {
+                            fillListbox(selectName + " WHERE " + filterData);
+                        }
                     }
                     else
                     {
-                        fillListbox(selectName + " WHERE " + filterName + " AND " + filterData);
+                        if (SortareAlfabetica_CheckBox.Checked == true)
+                        {
+                            fillListbox(selectName + orderName);
+                        }
+                        else
+                        {
+                            fillListbox(selectName);
+                        }
                     }
                 }
                 else
                 {
-                    if (SortareAlfabetica_CheckBox.Checked == true)
+                    string filterDescribe = "Descriere LIKE '%" + Filtru_textBox.Text + "%'";
+                    if (MedicamenteExpirate_checkBox.Checked == true)
                     {
-                        fillListbox(selectName + " WHERE " + filterName + orderName);
+                        if (SortareAlfabetica_CheckBox.Checked == true)
+                        {
+                            fillListbox(selectName + " WHERE " + filterDescribe + " AND " + filterData + orderName);
+                        }
+                        else
+                        {
+                            fillListbox(selectName + " WHERE " + filterDescribe + " AND " + filterData);
+                        }
                     }
                     else
                     {
-                        fillListbox(selectName + " WHERE " + filterName);
+                        if (SortareAlfabetica_CheckBox.Checked == true)
+                        {
+                            fillListbox(selectName + " WHERE " + filterDescribe + orderName);
+                        }
+                        else
+                        {
+                            fillListbox(selectName + " WHERE " + filterDescribe);
+                        }
                     }
                 }
-                
             }
         }
 
@@ -494,11 +664,12 @@ namespace Medicamente
         {
             SqlConn.OpenConn();
             int id = Int32.Parse(Id_label.Text);
-            string query = deleteString + " WHERE Id =" + id;
+            string query = deleteString + " WHERE Id = @id";
 
             SqlCommand command = SqlConn.connection.CreateCommand();
             command.CommandType = CommandType.Text;
             command.CommandText = query;
+            command.Parameters.Add(new SqlParameter("@id", id));
             command.ExecuteNonQuery();
 
             SqlConn.CloseConn();
@@ -581,6 +752,7 @@ namespace Medicamente
         {
             mouseDown = false;
         }
+
 
 
         //_____________________END OF Code for makig app move by mouse drag____________________________________________

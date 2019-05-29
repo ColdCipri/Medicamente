@@ -7,8 +7,18 @@ Id INT PRIMARY KEY IDENTITY,
 Nume VARCHAR(50), 
 Buc VARCHAR(50),  
 Tip VARCHAR(50),
-DataExpirarii DATE NOT NULL,
-Imagine varbinary(max))
+DataExpirarii DATE,
+Imagine varbinary(max),
+SubstantaBaza VARCHAR(50),
+SubstBazaCantitate INT,
+Descriere VARCHAR(100))
+
+
+
+
+
+
+
 
 DROP TABLE Medicamente
 
