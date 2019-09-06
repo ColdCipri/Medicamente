@@ -56,6 +56,7 @@ namespace Medicamente
             if (listBoxMedicamente.SelectedIndex == -1)
             {
                 listBoxMedicamente.ClearSelected();
+                Filtru_comboBox.SelectedIndex = 0;
                 Delete_button.Enabled = false;
                 Update_button.Text = "Adauga";
             }
@@ -147,6 +148,7 @@ namespace Medicamente
                 {
                     MessageBox.Show("Acest medicament expira azi!", "Expirat!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
+
                 SqlConn.CloseConn();
             }
         }
@@ -389,10 +391,9 @@ namespace Medicamente
 
 
         //________________________________Code for filter textbox_______________________________________________________________
-        //BUG not working if first checked sorted and than write in textbox
         private void Filtru_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (Filtru_comboBox.SelectedIndex == 0)
+            if (Filtru_comboBox.SelectedIndex == -1 || Filtru_comboBox.SelectedIndex == 0)
             {
 
                 if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
@@ -487,7 +488,7 @@ namespace Medicamente
 
         private void SortareAlfabetica_CheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (Filtru_comboBox.SelectedIndex == 0)
+            if (Filtru_comboBox.SelectedIndex == -1 || Filtru_comboBox.SelectedIndex == 0)
             {
                 if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
                 {
@@ -615,7 +616,15 @@ namespace Medicamente
                     Update_button.Text = "Actualizare";
                 }
 
-                Filtru_comboBox.SelectedIndex = -1;
+
+                fillListbox(selectName);
+
+                Filtru_comboBox.SelectedIndex = 0;
+                Delete_button.Enabled = false;
+                Update_button.Text = "Adauga";
+                Filtru_textBox.Text = "";
+                SortareAlfabetica_CheckBox.Checked = false;
+                MedicamenteExpirate_checkBox.Checked = false;
             }
         }
 
@@ -626,7 +635,7 @@ namespace Medicamente
 
         private void MedicamenteExpirate_checkBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (Filtru_comboBox.SelectedIndex == 0)
+            if (Filtru_comboBox.SelectedIndex == -1 || Filtru_comboBox.SelectedIndex == 0)
             {
                 if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
                 {
@@ -789,7 +798,6 @@ namespace Medicamente
                 //listBoxMedicamente.Items.Add(r["Nume"].ToString());
             }
 
-
             SqlConn.CloseConn();
         }
 
@@ -848,17 +856,6 @@ namespace Medicamente
 
         //_____________________END OF Code to empty the textboxes____________________________________________
 
-
-        //________________Code to empty the filters when combobox changed selected index_____________________
-
-        private void Filtru_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Filtru_textBox.Text = "";
-            SortareAlfabetica_CheckBox.Checked = false;
-            MedicamenteExpirate_checkBox.Checked = false;
-        }
-
-        //_______________END OF Code to empty the filters when combobox changed selected index_________________
 
 
     }
