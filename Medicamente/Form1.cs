@@ -21,6 +21,7 @@ namespace Medicamente
         string filterData = " DataExpirarii < (select GETDATE())";
         string orderName = " ORDER BY Nume";
         string insertString = "INSERT INTO Medicamente(Nume, Buc, Tip, DataExpirarii, Imagine, SubstantaBaza, SubstBazaCantitate, Descriere)";
+        string insertDefaultString = "INSERT INTO Medicamente(Nume, Buc, Tip, DataExpirarii)";
         string deleteString = "DELETE FROM Medicamente";
         private bool mouseDown;
         private Point lastLocation;
@@ -28,6 +29,7 @@ namespace Medicamente
         public Form1()
         {
             InitializeComponent();
+            Filtru_comboBox.SelectedIndex = 0;
             this.Text = SqlConn.myApp();
         }
 
@@ -196,18 +198,8 @@ namespace Medicamente
                         command.Parameters.Add(new SqlParameter("@descriere", descriere));
                         command.ExecuteNonQuery();
 
-
-                        Id_label.Text = "";
-                        Nume_textBox.Text = "";
-                        Bucati_textBox.Text = "";
-                        DataExpirarii_Picker.Text = "";
-                        Tip_comboBox.SelectedIndex = -1;
-                        SubstantaBaza_textBox.Text = "";
-                        SubstBazaCantitate_textBox.Text = "";
-                        Descriere_textBox.Text = "";
-                        Imagine_pictureBox.Image = null;
-                        Imagine_pictureBox.ImageLocation = "";
-                        imgLocation = "";
+                        
+                        
 
                         fillListbox(selectName);
 
@@ -270,16 +262,9 @@ namespace Medicamente
                         command.ExecuteNonQuery();
                         SqlConn.CloseConn();
                     }
-                    
-                    Id_label.Text = "";
-                    Nume_textBox.Text = "";
-                    Bucati_textBox.Text = "";
-                    DataExpirarii_Picker.Text = "";
-                    Tip_comboBox.SelectedIndex = -1;
-                    Imagine_pictureBox.Image = null;
-                    Imagine_pictureBox.ImageLocation = "";
-                    imgLocation = "";
 
+                    clearTextboxes();
+                    
 
                     Delete_button.Enabled = false;
                     Update_button.Text = "Adauga";
@@ -326,6 +311,65 @@ namespace Medicamente
 
         //________________________________END OF Code for Restart button______________________________________________________
 
+        //________________________________Code for Add from file button______________________________________________________
+
+
+        private void AdaugaDinFisier_button_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "txt files(*.txt)|*.txt|.csv files(*.csv)|*.csv|All files(*.*)|*.*";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string txtLocation = dialog.FileName.ToString();
+                List<String> stringList = Utils.readFromFile(txtLocation);
+
+                foreach (var word in stringList)
+                {
+                    string[] words = word.Split(',');
+                    if (words.Length == 4)
+                    {
+                        SqlConn.OpenConn();
+
+                        string query = insertDefaultString + " VALUES(@name, @bucati, @tip, @data)";
+
+                        SqlCommand command = SqlConn.connection.CreateCommand();
+                        command.CommandType = CommandType.Text;
+                        command.CommandText = query;
+                        command.Parameters.Add(new SqlParameter("@name", words[0]));
+                        command.Parameters.Add(new SqlParameter("@bucati", words[1]));
+                        command.Parameters.Add(new SqlParameter("@tip", words[2]));
+                        command.Parameters.Add(new SqlParameter("@data", DateTime.ParseExact(words[3], @"M/d/yyyy", System.Globalization.CultureInfo.InvariantCulture)));
+                        command.ExecuteNonQuery();
+
+                        fillListbox(selectName);
+                        SqlConn.CloseConn();
+                    }
+                    if (words.Length == 6)
+                    {
+                        SqlConn.OpenConn();
+
+                        string str = "INSERT INTO Medicamente(Nume, Buc, Tip, DataExpirarii, SubstantaBaza, SubstBazaCantitate)";
+                        string query = str + " VALUES(@name, @bucati, @tip, @data, @substBaza, @substCant)";
+
+                        SqlCommand command = SqlConn.connection.CreateCommand();
+                        command.CommandType = CommandType.Text;
+                        command.CommandText = query;
+                        command.Parameters.Add(new SqlParameter("@name", words[0]));
+                        command.Parameters.Add(new SqlParameter("@bucati", words[1]));
+                        command.Parameters.Add(new SqlParameter("@tip", words[2]));
+                        command.Parameters.Add(new SqlParameter("@data", DateTime.ParseExact(words[3], @"M/d/yyyy", System.Globalization.CultureInfo.InvariantCulture)));
+                        command.Parameters.Add(new SqlParameter("@substBaza", words[4]));
+                        command.Parameters.Add(new SqlParameter("@substCant", words[5]));
+                        command.ExecuteNonQuery();
+
+                        fillListbox(selectName);
+                        SqlConn.CloseConn();
+                    }
+                }
+            }
+        }
+
+        //________________________________END OF Code for Add form file button_________________________________________________
 
         //________________________________Code for Upload picture button______________________________________________________
 
@@ -345,10 +389,10 @@ namespace Medicamente
 
 
         //________________________________Code for filter textbox_______________________________________________________________
-
+        //BUG not working if first checked sorted and than write in textbox
         private void Filtru_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (Filtru_comboBox.SelectedIndex == -1 || Filtru_comboBox.SelectedIndex == 0)
+            if (Filtru_comboBox.SelectedIndex == 0)
             {
 
                 if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
@@ -357,9 +401,31 @@ namespace Medicamente
                 }
                 else
                 {
-                    string filterName = "Nume LIKE '" + Filtru_textBox.Text + "%'";
 
-                    fillListbox(selectName + " WHERE " + filterName);
+                    string filterName = "Nume LIKE '" + Filtru_textBox.Text + "%'";
+                    
+                    if (SortareAlfabetica_CheckBox.Checked == true)
+                    {
+                        if (MedicamenteExpirate_checkBox.Checked == true)
+                        {
+                            fillListbox(selectName + " WHERE " + filterName + " AND " + filterData + orderName);
+                        }
+                        else
+                        {
+                            fillListbox(selectName + " WHERE " + filterName + orderName);
+                        }
+                    }
+                    else
+                    {
+                        if (MedicamenteExpirate_checkBox.Checked == true)
+                        {
+                            fillListbox(selectName + " WHERE " + filterName + " AND " + filterData);
+                        }
+                        else
+                        {
+                            fillListbox(selectName + " WHERE "+ filterName);
+                        }
+                    }
                 }
             }
             else
@@ -370,7 +436,30 @@ namespace Medicamente
                 }
                 else
                 {
-                    fillListbox(selectName + " WHERE " + "Descriere LIKE '%" + Filtru_textBox.Text + "%'");
+                    string filterDescription = "Descriere LIKE '%" + Filtru_textBox.Text + "%'";
+
+                    if (SortareAlfabetica_CheckBox.Checked == true)
+                    {
+                        if (MedicamenteExpirate_checkBox.Checked == true)
+                        {
+                            fillListbox(selectName + " WHERE " + filterDescription + " AND " + filterData + orderName);
+                        }
+                        else
+                        {
+                            fillListbox(selectName + " WHERE " + filterDescription + orderName);
+                        }
+                    }
+                    else
+                    {
+                        if (MedicamenteExpirate_checkBox.Checked == true)
+                        {
+                            fillListbox(selectName + " WHERE " + filterDescription + " AND " + filterData);
+                        }
+                        else
+                        {
+                            fillListbox(selectName + " WHERE " + filterDescription);
+                        }
+                    }
                 }
             }
 
@@ -398,7 +487,7 @@ namespace Medicamente
 
         private void SortareAlfabetica_CheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (Filtru_comboBox.SelectedIndex == -1 || Filtru_comboBox.SelectedIndex == 0)
+            if (Filtru_comboBox.SelectedIndex == 0)
             {
                 if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
                 {
@@ -511,7 +600,7 @@ namespace Medicamente
         //________________________________END OF Code for alphabetic sort of listbox____________________________________________
 
 
-        //________________________________Code for reset selecte item from listbox_______________________________________________
+        //________________________________Code for reset selected item from listbox_______________________________________________
 
         private void listBoxMedicamente_MouseDown(object sender, MouseEventArgs e)
         {
@@ -519,16 +608,8 @@ namespace Medicamente
             {
                 listBoxMedicamente.SelectedItems.Clear();
 
-                Id_label.Text = "";
-                Nume_textBox.Text = "";
-                Bucati_textBox.Text = "";
-                DataExpirarii_Picker.Text = "";
-                SubstantaBaza_textBox.Text = "";
-                SubstBazaCantitate_textBox.Text = "";
-                Descriere_textBox.Text = "";
-                Tip_comboBox.SelectedIndex = -1;
+                clearTextboxes();
 
-                Imagine_pictureBox.Image = null;
                 if (Update_button.Text.Equals("Adauga"))
                 {
                     Update_button.Text = "Actualizare";
@@ -538,14 +619,14 @@ namespace Medicamente
             }
         }
 
-        //________________________________END OF Code for reset selecte item from listbox________________________________________
+        //________________________________END OF Code for reset selected item from listbox________________________________________
 
 
         //________________________________Code for filter by last date from listbox______________________________________________
 
         private void MedicamenteExpirate_checkBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (Filtru_comboBox.SelectedIndex == -1 || Filtru_comboBox.SelectedIndex == 0)
+            if (Filtru_comboBox.SelectedIndex == 0)
             {
                 if (String.IsNullOrEmpty(Filtru_textBox.Text) || String.IsNullOrWhiteSpace(Filtru_textBox.Text))
                 {
@@ -674,12 +755,7 @@ namespace Medicamente
 
             SqlConn.CloseConn();
 
-            Id_label.Text = "";
-            Nume_textBox.Text = "";
-            Bucati_textBox.Text = "";
-            DataExpirarii_Picker.Text = "";
-            Tip_comboBox.SelectedIndex = -1;
-            Imagine_pictureBox.Image = null;
+            clearTextboxes();
 
             Delete_button.Enabled = false;
             Update_button.Text = "Adauga";
@@ -713,6 +789,7 @@ namespace Medicamente
                 //listBoxMedicamente.Items.Add(r["Nume"].ToString());
             }
 
+
             SqlConn.CloseConn();
         }
 
@@ -729,7 +806,7 @@ namespace Medicamente
 
         //________________________________END OF Function for fill listbox________________________________________________________
 
-        //________________________________Code for makig app move by mouse drag___________________________________________________
+        //________________________________Code for making app move by mouse drag___________________________________________________
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -755,6 +832,34 @@ namespace Medicamente
 
 
 
-        //_____________________END OF Code for makig app move by mouse drag____________________________________________
+        //_____________________END OF Code for making app move by mouse drag____________________________________________
+
+
+        //________________________________Code to empty the textboxes___________________________________________________
+
+        private void clearTextboxes()
+        {
+            Id_label.Text = Nume_textBox.Text = Bucati_textBox.Text = DataExpirarii_Picker.Text =
+                               SubstantaBaza_textBox.Text = SubstBazaCantitate_textBox.Text = Descriere_textBox.Text =
+                               Imagine_pictureBox.ImageLocation = imgLocation = "";
+            Tip_comboBox.SelectedIndex = -1;
+            Imagine_pictureBox.Image = null;
+        }
+
+        //_____________________END OF Code to empty the textboxes____________________________________________
+
+
+        //________________Code to empty the filters when combobox changed selected index_____________________
+
+        private void Filtru_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Filtru_textBox.Text = "";
+            SortareAlfabetica_CheckBox.Checked = false;
+            MedicamenteExpirate_checkBox.Checked = false;
+        }
+
+        //_______________END OF Code to empty the filters when combobox changed selected index_________________
+
+
     }
 }

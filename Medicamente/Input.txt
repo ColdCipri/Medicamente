@@ -1,72 +1,72 @@
-Eubiotic,10,Pastila,01-01-2020
-Brufen 400mg,30,Pastila,30-06-2019
-Sorbifer Durules,50,Pastila,30-02-2020
-Gabapentin Aurobindo,7,Pastila,30-05-2020
-Muconasal Spray,Spray,1,31-12-2020
-Aloe Vera,1,Crema,31-01-2021
-Tantum Verde,Spray,1,30-03-2020
-BronhoSuport sirop tuse,Sirop,31-07-2020
-Antinevralgic Forte,20,Pastila,30-09-2019
-Uractiv 21,21,Pastila,30-06-2020
-UroSuport Forte,14,Pastila,31-12-2021
-Audi Spray,1,Spray,30-11-2020
-Algocalmin,40,Pastila,30-10-2019
-Algocalmin,20,Pastila,31-05-2020
-Magnerot,100,Pastila,30-10-2021,
-Coldrex Max Grip Lemon,10,Efervescent,31-11-2020
-Coldrex Max Grip Lemon,10,Efervescent,31-05-2021
-Paracetamol,20,Pastila,30-01-2021
-Ibuprofen,20,Pastila,28-02-2020
-Metroclopramid,12,Pastila,31-12-2021
-Emetix,4,Pastila,NU ARE
-Tagremin 400mg/80mg,10,Pastila,30-06-2020
-Cocculine,30,Pastila,31-12-2021
-Anticarcel,50,Pastila,31-05-2020
-Voltaren Forte,1,Crema,31-08-2021
-Voltaren,1,Crema,30-06-2020
-Strepsils Intensiv,24,Pastila,30-04-2020
-Fiobilin,20,Pastila,31-03-2022
-Motilium,10,Pastila,31-05-2021
-Fasconal,20,Pastila,30-04-2020
-Imodium,6,Pastila,31-12-2022
-Drill,5,Pastila,30-06-2020
-NoSPA,24,Pastila,31-05-2020
-Triferment,30,Pastila,01-05-2021
-Omeprazol Terapia 20mg,30,Pastila,30-04-2020
-Omeprazol Terapia 20mg,30,Pastila,31-05-2020
-Distonoplant,60,Pastila,31-12-2020
-AlleGel,1,Gel,31-05-2021
-Uractiv Forte,10,Pastila,30-06-2019
-Baraka,24,Pastila,31-07-2021
-Sindolor Gel,1,Crema,31-03-2020
-Betadine,Picaturi,30-06-2020
-Meloxicam 15mg,2,Supozitor,30-04-2020
-Orofar,24,Pastila,31-05-2020
-Olinth,1,Pastila,31-08-2019
-Olinth,1,Pastila,30-06-2020
-Locoid,1,Crema,30-04-2020
-Hyaginol,1,Gel,31-05-2020
-Herbaflu,1,Picaturi,01-02-2020
-Anaftin,1,Spray,30-11-2020
-Parasinus,20,Pastila,30-06-2020
-Betabioptal,1,Picaturi,31-05-2020
-Augumentin 75/125mg,14,Pastila,31-07-2019
-Crema de galbenele,1,Crema,31-03-2021
-Relaxirem Forte,28,Pastila,31-10-2020
-Tantum Verde,Pastila,1,31-01-2022
-Ibutin 300mg,20,Pastila,31-12-2019
-Cebrium,30,Pastila,31-05-2021
-Fucidin,1,Crema,31-03-2020
-Xyzal,33,Pastila,31-07-2021
-Solutie auriculara,1,Spray,01-06-2019
-Vitamina C 1000mg,10,Pastila,31-05-2020
-Venter,3,Pastila,31-11-2021
-Venter,15,Pastila,31-12-2021
-Sumetrolim,14,Pastila,30-06-2022
-Hemorzon,1,Crema,30-06-2019
-Elocom,1,Crema,28-02-2020
-Vitamina B12,50,Pastila,28-02-2020
-Supramax Articulatii,1,Spray,30-04-2020
-Gel Racoritor gheara dracului,1,Gel,20-05-2020
-Extract din Mladite de Zmeur,1,Picaturi,31-01-2024
-Extract din Mladite de Cimsir,1,Picaturi,31-01-2023
+Eubiotic,10,Pastila,01/01/2020
+Brufen 400mg,30,Pastila,06/30/2019
+Sorbifer Durules,50,Pastila,02/29/2020
+Gabapentin Aurobindo,7,Pastila,05/30/2020
+Muconasal Spray,1,Spray,12/31/2020
+Aloe Vera,1,Crema,01/31/2021
+Tantum Verde,1,Spray,03/30/2020
+BronhoSuport sirop tuse,1,Sirop,07/31/2020
+Antinevralgic Forte,20,Pastila,09/30/2019
+Uractiv 21,21,Pastila,06/30/2020
+UroSuport Forte,14,Pastila,12/31/2021
+Audi Spray,1,Spray,11/30/2020
+Algocalmin,40,Pastila,10/30/2019
+Algocalmin,20,Pastila,05/31/2020
+Magnerot,100,Pastila,10/30/2021
+Coldrex Max Grip Lemon,10,Efervescent,11/30/2020
+Coldrex Max Grip Lemon,10,Efervescent,05/31/2021
+Paracetamol,20,Pastila,01/30/2021,Paracetamol,500mg
+Ibuprofen,20,Pastila,02/28/2020
+Metroclopramid,12,Pastila,12/31/2021
+Emetix,4,Pastila,12/30/2020
+Tagremin 400mg/80mg,10,Pastila,06/30/2020
+Cocculine,30,Pastila,12/31/2021
+Anticarcel,50,Pastila,05/31/2020
+Voltaren Forte,1,Crema,08/31/2021
+Voltaren,1,Crema,06/30/2020
+Strepsils Intensiv,24,Pastila,04/30/2020
+Fiobilin,20,Pastila,03/31/2022
+Motilium,10,Pastila,05/31/2021
+Fasconal,20,Pastila,04/30/2020
+Imodium,6,Pastila,12/31/2022
+Drill,5,Pastila,06/30/2020
+NoSPA,24,Pastila,05/31/2020
+Triferment,30,Pastila,05/01/2021
+Omeprazol Terapia 20mg,30,Pastila,04/30/2020
+Omeprazol Terapia 20mg,30,Pastila,05/31/2020
+Distonoplant,60,Pastila,12/31/2020
+AlleGel,1,Gel,05/31/2021
+Uractiv Forte,10,Pastila,06/30/2019
+Baraka,24,Pastila,07/31/2021
+Sindolor Gel,1,Crema,03/31/2020
+Betadine,Picaturi,06/30/2020
+Meloxicam 15mg,2,Supozitor,04/30/2020
+Orofar,24,Pastila,05/31/2020
+Olinth,1,Pastila,08/31/2019
+Olinth,1,Pastila,06/30/2020
+Locoid,1,Crema,04/30/2020
+Hyaginol,1,Gel,05/31/2020
+Herbaflu,1,Picaturi,02/01/2020
+Anaftin,1,Spray,11/30/2020
+Parasinus,20,Pastila,06/30/2020
+Betabioptal,1,Picaturi,05/31/2020
+Augumentin 75/125mg,14,Pastila,07/31/2019
+Crema de galbenele,1,Crema,03/31/2021
+Relaxirem Forte,28,Pastila,10/31/2020
+Tantum Verde,1,Pastila,01/31/2022
+Ibutin 300mg,20,Pastila,12/31/2019
+Cebrium,30,Pastila,05/31/2021
+Fucidin,1,Crema,03/31/2020
+Xyzal,33,Pastila,07/31/2021
+Solutie auriculara,1,Spray,06/01/2019
+Vitamina C 1000mg,10,Pastila,05/31/2020
+Venter,3,Pastila,11/30/2021
+Venter,15,Pastila,12/31/2021
+Sumetrolim,14,Pastila,06/30/2022
+Hemorzon,1,Crema,06/30/2019
+Elocom,1,Crema,02/28/2020
+Vitamina B12,50,Pastila,02/28/2020
+Supramax Articulatii,1,Spray,04/30/2020
+Gel Racoritor gheara dracului,1,Gel,05/20/2020
+Extract din Mladite de Zmeur,1,Picaturi,01/31/2024
+Extract din Mladite de Cimsir,1,Picaturi,01/31/2023

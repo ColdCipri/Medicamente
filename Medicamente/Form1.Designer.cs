@@ -30,6 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.medicament_Group = new System.Windows.Forms.GroupBox();
+            this.AdaugaDinFisier_button = new System.Windows.Forms.Button();
+            this.SubstBazaCantitate_textBox = new System.Windows.Forms.TextBox();
+            this.SubstBazaCantitate_label = new System.Windows.Forms.Label();
+            this.SubstantaBaza_textBox = new System.Windows.Forms.TextBox();
+            this.SubstantaBaza_label = new System.Windows.Forms.Label();
+            this.Filtru_comboBox = new System.Windows.Forms.ComboBox();
             this.exit_button = new System.Windows.Forms.Button();
             this.Descriere_textBox = new System.Windows.Forms.TextBox();
             this.Descriere_label = new System.Windows.Forms.Label();
@@ -55,17 +61,13 @@
             this.Bucati_textBox = new System.Windows.Forms.TextBox();
             this.Nume_textBox = new System.Windows.Forms.TextBox();
             this.listBoxMedicamente = new System.Windows.Forms.ListBox();
-            this.Filtru_comboBox = new System.Windows.Forms.ComboBox();
-            this.SubstantaBaza_label = new System.Windows.Forms.Label();
-            this.SubstantaBaza_textBox = new System.Windows.Forms.TextBox();
-            this.SubstBazaCantitate_label = new System.Windows.Forms.Label();
-            this.SubstBazaCantitate_textBox = new System.Windows.Forms.TextBox();
             this.medicament_Group.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Imagine_pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // medicament_Group
             // 
+            this.medicament_Group.Controls.Add(this.AdaugaDinFisier_button);
             this.medicament_Group.Controls.Add(this.SubstBazaCantitate_textBox);
             this.medicament_Group.Controls.Add(this.SubstBazaCantitate_label);
             this.medicament_Group.Controls.Add(this.SubstantaBaza_textBox);
@@ -102,6 +104,70 @@
             this.medicament_Group.TabIndex = 0;
             this.medicament_Group.TabStop = false;
             this.medicament_Group.Text = "Medicament";
+            // 
+            // AdaugaDinFisier_button
+            // 
+            this.AdaugaDinFisier_button.BackColor = System.Drawing.Color.Gold;
+            this.AdaugaDinFisier_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.AdaugaDinFisier_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AdaugaDinFisier_button.Location = new System.Drawing.Point(311, 460);
+            this.AdaugaDinFisier_button.Name = "AdaugaDinFisier_button";
+            this.AdaugaDinFisier_button.Size = new System.Drawing.Size(115, 51);
+            this.AdaugaDinFisier_button.TabIndex = 60;
+            this.AdaugaDinFisier_button.Text = "Adauga din fisier";
+            this.AdaugaDinFisier_button.UseVisualStyleBackColor = false;
+            this.AdaugaDinFisier_button.Click += new System.EventHandler(this.AdaugaDinFisier_button_Click);
+            // 
+            // SubstBazaCantitate_textBox
+            // 
+            this.SubstBazaCantitate_textBox.Location = new System.Drawing.Point(784, 141);
+            this.SubstBazaCantitate_textBox.Name = "SubstBazaCantitate_textBox";
+            this.SubstBazaCantitate_textBox.Size = new System.Drawing.Size(52, 22);
+            this.SubstBazaCantitate_textBox.TabIndex = 59;
+            this.SubstBazaCantitate_textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SubstBazaCantitate_textBox_KeyPress);
+            // 
+            // SubstBazaCantitate_label
+            // 
+            this.SubstBazaCantitate_label.AutoSize = true;
+            this.SubstBazaCantitate_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SubstBazaCantitate_label.Location = new System.Drawing.Point(652, 134);
+            this.SubstBazaCantitate_label.Name = "SubstBazaCantitate_label";
+            this.SubstBazaCantitate_label.Size = new System.Drawing.Size(113, 29);
+            this.SubstBazaCantitate_label.TabIndex = 58;
+            this.SubstBazaCantitate_label.Text = "Cantitate:";
+            // 
+            // SubstantaBaza_textBox
+            // 
+            this.SubstantaBaza_textBox.Location = new System.Drawing.Point(528, 141);
+            this.SubstantaBaza_textBox.Name = "SubstantaBaza_textBox";
+            this.SubstantaBaza_textBox.Size = new System.Drawing.Size(118, 22);
+            this.SubstantaBaza_textBox.TabIndex = 57;
+            // 
+            // SubstantaBaza_label
+            // 
+            this.SubstantaBaza_label.AutoSize = true;
+            this.SubstantaBaza_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SubstantaBaza_label.Location = new System.Drawing.Point(306, 134);
+            this.SubstantaBaza_label.Name = "SubstantaBaza_label";
+            this.SubstantaBaza_label.Size = new System.Drawing.Size(216, 29);
+            this.SubstantaBaza_label.TabIndex = 56;
+            this.SubstantaBaza_label.Text = "Substanta de baza:";
+            // 
+            // Filtru_comboBox
+            // 
+            this.Filtru_comboBox.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.Filtru_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Filtru_comboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Filtru_comboBox.ForeColor = System.Drawing.Color.Black;
+            this.Filtru_comboBox.FormattingEnabled = true;
+            this.Filtru_comboBox.Items.AddRange(new object[] {
+            "Nume",
+            "Descriere"});
+            this.Filtru_comboBox.Location = new System.Drawing.Point(88, 460);
+            this.Filtru_comboBox.Name = "Filtru_comboBox";
+            this.Filtru_comboBox.Size = new System.Drawing.Size(90, 24);
+            this.Filtru_comboBox.TabIndex = 55;
+            this.Filtru_comboBox.SelectedIndexChanged += new System.EventHandler(this.Filtru_comboBox_SelectedIndexChanged);
             // 
             // exit_button
             // 
@@ -229,7 +295,7 @@
             this.Delete_button.BackColor = System.Drawing.Color.Gold;
             this.Delete_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.Delete_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Delete_button.Location = new System.Drawing.Point(307, 470);
+            this.Delete_button.Location = new System.Drawing.Point(311, 388);
             this.Delete_button.Name = "Delete_button";
             this.Delete_button.Size = new System.Drawing.Size(115, 51);
             this.Delete_button.TabIndex = 33;
@@ -264,7 +330,7 @@
             this.Update_button.BackColor = System.Drawing.Color.Gold;
             this.Update_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.Update_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Update_button.Location = new System.Drawing.Point(307, 389);
+            this.Update_button.Location = new System.Drawing.Point(311, 307);
             this.Update_button.Name = "Update_button";
             this.Update_button.Size = new System.Drawing.Size(115, 51);
             this.Update_button.TabIndex = 34;
@@ -376,56 +442,6 @@
             this.listBoxMedicamente.SelectedIndexChanged += new System.EventHandler(this.listBoxMedicamente_SelectedIndexChanged);
             this.listBoxMedicamente.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBoxMedicamente_MouseDown);
             // 
-            // Filtru_comboBox
-            // 
-            this.Filtru_comboBox.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.Filtru_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.Filtru_comboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Filtru_comboBox.ForeColor = System.Drawing.Color.Black;
-            this.Filtru_comboBox.FormattingEnabled = true;
-            this.Filtru_comboBox.Items.AddRange(new object[] {
-            "Nume",
-            "Descriere"});
-            this.Filtru_comboBox.Location = new System.Drawing.Point(88, 460);
-            this.Filtru_comboBox.Name = "Filtru_comboBox";
-            this.Filtru_comboBox.Size = new System.Drawing.Size(90, 24);
-            this.Filtru_comboBox.TabIndex = 55;
-            // 
-            // SubstantaBaza_label
-            // 
-            this.SubstantaBaza_label.AutoSize = true;
-            this.SubstantaBaza_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SubstantaBaza_label.Location = new System.Drawing.Point(306, 134);
-            this.SubstantaBaza_label.Name = "SubstantaBaza_label";
-            this.SubstantaBaza_label.Size = new System.Drawing.Size(216, 29);
-            this.SubstantaBaza_label.TabIndex = 56;
-            this.SubstantaBaza_label.Text = "Substanta de baza:";
-            // 
-            // SubstantaBaza_textBox
-            // 
-            this.SubstantaBaza_textBox.Location = new System.Drawing.Point(528, 141);
-            this.SubstantaBaza_textBox.Name = "SubstantaBaza_textBox";
-            this.SubstantaBaza_textBox.Size = new System.Drawing.Size(118, 22);
-            this.SubstantaBaza_textBox.TabIndex = 57;
-            // 
-            // SubstBazaCantitate_label
-            // 
-            this.SubstBazaCantitate_label.AutoSize = true;
-            this.SubstBazaCantitate_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SubstBazaCantitate_label.Location = new System.Drawing.Point(652, 134);
-            this.SubstBazaCantitate_label.Name = "SubstBazaCantitate_label";
-            this.SubstBazaCantitate_label.Size = new System.Drawing.Size(113, 29);
-            this.SubstBazaCantitate_label.TabIndex = 58;
-            this.SubstBazaCantitate_label.Text = "Cantitate:";
-            // 
-            // SubstBazaCantitate_textBox
-            // 
-            this.SubstBazaCantitate_textBox.Location = new System.Drawing.Point(784, 141);
-            this.SubstBazaCantitate_textBox.Name = "SubstBazaCantitate_textBox";
-            this.SubstBazaCantitate_textBox.Size = new System.Drawing.Size(52, 22);
-            this.SubstBazaCantitate_textBox.TabIndex = 59;
-            this.SubstBazaCantitate_textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SubstBazaCantitate_textBox_KeyPress);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -486,6 +502,7 @@
         private System.Windows.Forms.Label SubstBazaCantitate_label;
         private System.Windows.Forms.TextBox SubstantaBaza_textBox;
         private System.Windows.Forms.Label SubstantaBaza_label;
+        private System.Windows.Forms.Button AdaugaDinFisier_button;
     }
 }
 
