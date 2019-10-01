@@ -167,7 +167,6 @@
             this.Filtru_comboBox.Name = "Filtru_comboBox";
             this.Filtru_comboBox.Size = new System.Drawing.Size(90, 24);
             this.Filtru_comboBox.TabIndex = 55;
-            this.Filtru_comboBox.SelectedIndexChanged += new System.EventHandler(this.Filtru_comboBox_SelectedIndexChanged);
             // 
             // exit_button
             // 

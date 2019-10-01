@@ -271,6 +271,11 @@ namespace Medicamente
                     Delete_button.Enabled = false;
                     Update_button.Text = "Adauga";
 
+                    SortareAlfabetica_CheckBox.Checked = false;
+                    MedicamenteExpirate_checkBox.Checked = false;
+                    Filtru_textBox.Text = "";
+
+
                     fillListbox(selectName);
                     
                 }
@@ -768,6 +773,10 @@ namespace Medicamente
 
             Delete_button.Enabled = false;
             Update_button.Text = "Adauga";
+
+            SortareAlfabetica_CheckBox.Checked = false;
+            MedicamenteExpirate_checkBox.Checked = false;
+            Filtru_textBox.Text = "";
 
             fillListbox(selectName);
         }
