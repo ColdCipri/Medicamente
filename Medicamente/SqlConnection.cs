@@ -16,7 +16,7 @@ namespace Medicamente
 
         public static string GetConnectionString()
         {
-            return @"Data Source = CIPRI-ASUS\SQLEXPRESS; " +
+            return @"Data Source = CIPRI-ROG\SQLEXPRESS; " +
                     "Initial Catalog = Medicamente_DB; " +
                     "Integrated Security = True; " +
                     "MultipleActiveResultSets = True;";

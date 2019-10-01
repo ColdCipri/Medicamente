@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.medicament_Group = new System.Windows.Forms.GroupBox();
+            this.MedicamenteExpirate_button = new System.Windows.Forms.Button();
             this.AdaugaDinFisier_button = new System.Windows.Forms.Button();
             this.SubstBazaCantitate_textBox = new System.Windows.Forms.TextBox();
             this.SubstBazaCantitate_label = new System.Windows.Forms.Label();
@@ -40,7 +41,6 @@
             this.Descriere_textBox = new System.Windows.Forms.TextBox();
             this.Descriere_label = new System.Windows.Forms.Label();
             this.MedicamenteExpirate_checkBox = new System.Windows.Forms.CheckBox();
-            this.FiltruExpirat_label = new System.Windows.Forms.Label();
             this.Restart_button = new System.Windows.Forms.Button();
             this.ID_text_label = new System.Windows.Forms.Label();
             this.SortareAlfabetica_CheckBox = new System.Windows.Forms.CheckBox();
@@ -61,12 +61,14 @@
             this.Bucati_textBox = new System.Windows.Forms.TextBox();
             this.Nume_textBox = new System.Windows.Forms.TextBox();
             this.listBoxMedicamente = new System.Windows.Forms.ListBox();
+            this.MedicamenteExpirate_label = new System.Windows.Forms.Label();
             this.medicament_Group.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Imagine_pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // medicament_Group
             // 
+            this.medicament_Group.Controls.Add(this.MedicamenteExpirate_button);
             this.medicament_Group.Controls.Add(this.AdaugaDinFisier_button);
             this.medicament_Group.Controls.Add(this.SubstBazaCantitate_textBox);
             this.medicament_Group.Controls.Add(this.SubstBazaCantitate_label);
@@ -77,7 +79,6 @@
             this.medicament_Group.Controls.Add(this.Descriere_textBox);
             this.medicament_Group.Controls.Add(this.Descriere_label);
             this.medicament_Group.Controls.Add(this.MedicamenteExpirate_checkBox);
-            this.medicament_Group.Controls.Add(this.FiltruExpirat_label);
             this.medicament_Group.Controls.Add(this.Restart_button);
             this.medicament_Group.Controls.Add(this.ID_text_label);
             this.medicament_Group.Controls.Add(this.SortareAlfabetica_CheckBox);
@@ -98,12 +99,26 @@
             this.medicament_Group.Controls.Add(this.Bucati_textBox);
             this.medicament_Group.Controls.Add(this.Nume_textBox);
             this.medicament_Group.Controls.Add(this.listBoxMedicamente);
+            this.medicament_Group.Controls.Add(this.MedicamenteExpirate_label);
             this.medicament_Group.Location = new System.Drawing.Point(12, 3);
             this.medicament_Group.Name = "medicament_Group";
             this.medicament_Group.Size = new System.Drawing.Size(844, 610);
             this.medicament_Group.TabIndex = 0;
             this.medicament_Group.TabStop = false;
             this.medicament_Group.Text = "Medicament";
+            // 
+            // MedicamenteExpirate_button
+            // 
+            this.MedicamenteExpirate_button.BackColor = System.Drawing.Color.Gold;
+            this.MedicamenteExpirate_button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.MedicamenteExpirate_button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.MedicamenteExpirate_button.Location = new System.Drawing.Point(181, 541);
+            this.MedicamenteExpirate_button.Name = "MedicamenteExpirate_button";
+            this.MedicamenteExpirate_button.Size = new System.Drawing.Size(115, 63);
+            this.MedicamenteExpirate_button.TabIndex = 61;
+            this.MedicamenteExpirate_button.Text = "Medicamente dupa data exiprarii";
+            this.MedicamenteExpirate_button.UseVisualStyleBackColor = false;
+            this.MedicamenteExpirate_button.Click += new System.EventHandler(this.MedicamenteExpirate_button_Click);
             // 
             // AdaugaDinFisier_button
             // 
@@ -167,7 +182,6 @@
             this.Filtru_comboBox.Name = "Filtru_comboBox";
             this.Filtru_comboBox.Size = new System.Drawing.Size(90, 24);
             this.Filtru_comboBox.TabIndex = 55;
-            this.Filtru_comboBox.SelectedIndexChanged += new System.EventHandler(this.Filtru_comboBox_SelectedIndexChanged);
             // 
             // exit_button
             // 
@@ -207,22 +221,12 @@
             // MedicamenteExpirate_checkBox
             // 
             this.MedicamenteExpirate_checkBox.AutoSize = true;
-            this.MedicamenteExpirate_checkBox.Location = new System.Drawing.Point(268, 563);
+            this.MedicamenteExpirate_checkBox.Location = new System.Drawing.Point(122, 575);
             this.MedicamenteExpirate_checkBox.Name = "MedicamenteExpirate_checkBox";
             this.MedicamenteExpirate_checkBox.Size = new System.Drawing.Size(18, 17);
             this.MedicamenteExpirate_checkBox.TabIndex = 52;
             this.MedicamenteExpirate_checkBox.UseVisualStyleBackColor = true;
             this.MedicamenteExpirate_checkBox.CheckedChanged += new System.EventHandler(this.MedicamenteExpirate_checkBox_CheckedChanged);
-            // 
-            // FiltruExpirat_label
-            // 
-            this.FiltruExpirat_label.AutoSize = true;
-            this.FiltruExpirat_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FiltruExpirat_label.Location = new System.Drawing.Point(1, 552);
-            this.FiltruExpirat_label.Name = "FiltruExpirat_label";
-            this.FiltruExpirat_label.Size = new System.Drawing.Size(251, 29);
-            this.FiltruExpirat_label.TabIndex = 51;
-            this.FiltruExpirat_label.Text = "Medicamente expirate";
             // 
             // Restart_button
             // 
@@ -254,7 +258,7 @@
             // SortareAlfabetica_CheckBox
             // 
             this.SortareAlfabetica_CheckBox.AutoSize = true;
-            this.SortareAlfabetica_CheckBox.Location = new System.Drawing.Point(217, 514);
+            this.SortareAlfabetica_CheckBox.Location = new System.Drawing.Point(208, 513);
             this.SortareAlfabetica_CheckBox.Name = "SortareAlfabetica_CheckBox";
             this.SortareAlfabetica_CheckBox.Size = new System.Drawing.Size(18, 17);
             this.SortareAlfabetica_CheckBox.TabIndex = 49;
@@ -265,7 +269,7 @@
             // 
             this.SortareAlfabetica_label.AutoSize = true;
             this.SortareAlfabetica_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SortareAlfabetica_label.Location = new System.Drawing.Point(1, 503);
+            this.SortareAlfabetica_label.Location = new System.Drawing.Point(1, 502);
             this.SortareAlfabetica_label.Name = "SortareAlfabetica_label";
             this.SortareAlfabetica_label.Size = new System.Drawing.Size(201, 29);
             this.SortareAlfabetica_label.TabIndex = 48;
@@ -442,6 +446,15 @@
             this.listBoxMedicamente.SelectedIndexChanged += new System.EventHandler(this.listBoxMedicamente_SelectedIndexChanged);
             this.listBoxMedicamente.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBoxMedicamente_MouseDown);
             // 
+            // MedicamenteExpirate_label
+            // 
+            this.MedicamenteExpirate_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MedicamenteExpirate_label.Location = new System.Drawing.Point(6, 539);
+            this.MedicamenteExpirate_label.Name = "MedicamenteExpirate_label";
+            this.MedicamenteExpirate_label.Size = new System.Drawing.Size(172, 61);
+            this.MedicamenteExpirate_label.TabIndex = 62;
+            this.MedicamenteExpirate_label.Text = "Medicamente expirate";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -490,9 +503,7 @@
         private System.Windows.Forms.TextBox Filtru_textBox;
         private System.Windows.Forms.Label Filtru_label;
         private System.Windows.Forms.CheckBox SortareAlfabetica_CheckBox;
-        private System.Windows.Forms.Label SortareAlfabetica_label;
         private System.Windows.Forms.Label ID_text_label;
-        private System.Windows.Forms.Label FiltruExpirat_label;
         private System.Windows.Forms.CheckBox MedicamenteExpirate_checkBox;
         private System.Windows.Forms.Button exit_button;
         private System.Windows.Forms.TextBox Descriere_textBox;
@@ -503,6 +514,9 @@
         private System.Windows.Forms.TextBox SubstantaBaza_textBox;
         private System.Windows.Forms.Label SubstantaBaza_label;
         private System.Windows.Forms.Button AdaugaDinFisier_button;
+        private System.Windows.Forms.Button MedicamenteExpirate_button;
+        private System.Windows.Forms.Label SortareAlfabetica_label;
+        private System.Windows.Forms.Label MedicamenteExpirate_label;
     }
 }
 
