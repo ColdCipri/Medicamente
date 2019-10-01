@@ -33,6 +33,23 @@ namespace Medicamente
             this.Text = SqlConn.myApp();
         }
 
+
+        //________________________________Code for shadow on border___________________________________________________
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                const int CS_DROPSHADOW = 0x20000;
+                CreateParams cp = base.CreateParams;
+                cp.ClassStyle |= CS_DROPSHADOW;
+                return cp;
+            }
+
+        }
+
+        //_____________________END OF Code for shadow on border____________________________________________
+
         //_____________________Code for filling listbox when app is loaded___________________________________________________
 
         private void Form1_Load(object sender, EventArgs e)
@@ -863,9 +880,15 @@ namespace Medicamente
             Imagine_pictureBox.Image = null;
         }
 
+
         //_____________________END OF Code to empty the textboxes____________________________________________
 
 
+        private void MedicamenteExpirate_button_Click(object sender, EventArgs e)
+        {
+            Medicamente_Expirate childForm = new Medicamente_Expirate();
+            childForm.ShowDialog();
+        }
 
     }
 }
