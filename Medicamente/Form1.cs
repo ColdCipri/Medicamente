@@ -340,8 +340,10 @@ namespace Medicamente
 
         private void AdaugaDinFisier_button_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "txt files(*.txt)|*.txt|.csv files(*.csv)|*.csv|All files(*.*)|*.*";
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Filter = "txt files(*.txt)|*.txt|.csv files(*.csv)|*.csv|All files(*.*)|*.*"
+            };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 string txtLocation = dialog.FileName.ToString();
@@ -399,8 +401,10 @@ namespace Medicamente
 
         private void Upload_button_Upgrade_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "jpg files(*.jpg)|*.jpg|png files(*.png)|*.png|All files(*.*)|*.*";
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Filter = "jpg files(*.jpg)|*.jpg|png files(*.png)|*.png|All files(*.*)|*.*"
+            };
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 imgLocation = dialog.FileName.ToString();

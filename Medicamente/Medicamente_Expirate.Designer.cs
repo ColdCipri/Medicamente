@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Medicamente_Expirate));
             this.exit_button = new System.Windows.Forms.Button();
             this.Pick_monthCalendar = new System.Windows.Forms.MonthCalendar();
             this.text_label = new System.Windows.Forms.Label();
@@ -69,6 +70,14 @@
             this.text_label.TabIndex = 4;
             this.text_label.Text = "Va rugam selectati data in jurul careia va intereseaza daca un medicament expira." +
     " ";
+            //
+            // MedicamenteExpirate_listbox
+            //
+            this.MedicamenteExpirate_listbox.SelectedIndexChanged += new System.EventHandler(this.MedicamenteExpirate_listbox_SelectedIndexChanged);
+            //
+            // sterge_button
+            //
+            this.sterge_button.Click += new System.EventHandler(this.sterge_button_Click);
             // 
             // Medicamente_Expirate
             // 
@@ -82,6 +91,7 @@
             this.Controls.Add(this.Pick_monthCalendar);
             this.Controls.Add(this.exit_button);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Medicamente_Expirate";

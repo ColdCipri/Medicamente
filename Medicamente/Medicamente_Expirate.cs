@@ -15,7 +15,10 @@ namespace Medicamente
     {
 
         private ListBox MedicamenteExpirate_listbox = new ListBox();
-        string selectName = "SELECT ID, Nume FROM Medicamente";
+        private Label dataExpirare_label = new Label();
+        private Button sterge_button = new Button();
+        private string selectName = "SELECT ID, Nume FROM Medicamente";
+        private string deleteString = "DELETE FROM Medicamente";
         private bool mouseDown;
         private Point lastLocation;
 
@@ -68,22 +71,45 @@ namespace Medicamente
         {
             mouseDown = false;
         }
-        
+
         //_____________________END OF Code for making app move by mouse drag____________________________________________
 
 
         private void Pick_monthCalendar_DateChanged(object sender, DateRangeEventArgs e)
         {
-            this.Size = new Size(500, 300);
-            exit_button.Location = new Point(472, 7);
-            this.Controls.Add(MedicamenteExpirate_listbox);
 
-            String calendar = Pick_monthCalendar.SelectionRange.Start.ToShortDateString();
+            string calendar = Pick_monthCalendar.SelectionRange.Start.ToShortDateString();
 
             string query = selectName + " WHERE DataExpirarii <= CONVERT(date,'" + calendar + "',102)";
-            //TO-DO    
-            //when selected index resize and add the date when it expires and delete button.
-            fillListbox(query);
+
+            SqlConn.OpenConn();
+            using (SqlCommand command = new SqlCommand(query, SqlConn.connection))
+            {
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        this.Size = new Size(500, 300);
+                        exit_button.Location = new Point(472, 7);
+                        this.Controls.Add(MedicamenteExpirate_listbox);
+                        fillListbox(query);
+                        if (MedicamenteExpirate_listbox.SelectedIndex == -1)
+                        {
+                            this.Controls.Remove(dataExpirare_label);
+                            this.Controls.Remove(sterge_button);
+                        }
+                    }
+                    else
+                    {
+                        this.Size = new Size(365, 323);
+                        exit_button.Location = new Point(338, 2);
+                        this.Controls.Remove(MedicamenteExpirate_listbox);
+                        this.Controls.Remove(dataExpirare_label);
+                        this.Controls.Remove(sterge_button);
+                    }
+                }
+            }
+            SqlConn.CloseConn();
 
         }
 
@@ -117,10 +143,94 @@ namespace Medicamente
             SqlConn.CloseConn();
         }
 
-        private static void convertDate(String input)
+
+        private void MedicamenteExpirate_listbox_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+            //TO-DO    
+            //when selected index changes resize and add the delete button.
+            SqlConn.OpenConn();
+            SqlCommand command = SqlConn.connection.CreateCommand();
+            command.CommandType = CommandType.Text;
+            if (MedicamenteExpirate_listbox.SelectedIndex == -1)
+            {
+                MedicamenteExpirate_listbox.ClearSelected();
+                this.Controls.Remove(sterge_button);
+                this.Controls.Remove(dataExpirare_label);
+                this.Size = new Size(500, 300);
+                exit_button.Location = new Point(472, 7);
+            }
+            else
+            {
+                command.CommandText = "SELECT * FROM Medicamente WHERE ID = '" + MedicamenteExpirate_listbox.SelectedItem.ToString().Substring(0, MedicamenteExpirate_listbox.SelectedItem.ToString().IndexOf(" ")) + "'";
+                command.ExecuteNonQuery();
+
+                DataTable dataTable = new DataTable();
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+                dataAdapter.Fill(dataTable);
+                foreach (DataRow r in dataTable.Rows)
+                {
+                    string dataexp = r["DataExpirarii"].ToString();
+                    dataexp = dataexp.Substring(0, 10);
+                    dataExpirare_label.Text = "Medicamentul expira in: " + dataexp;
+                }
+
+                this.Size = new Size(600, 300);
+                exit_button.Location = new Point(580, 7);
+
+                dataExpirare_label.Size = new Size(120, 40);
+                dataExpirare_label.Location = new Point(410, 30);
+                this.Controls.Add(dataExpirare_label);
+
+                sterge_button.Size = new Size(100, 50);
+                sterge_button.Location = new Point(410, 80);
+                sterge_button.Text = "Stergere Medicament";
+                sterge_button.BackColor = Color.Gold;
+                sterge_button.FlatStyle = FlatStyle.Flat;
+                sterge_button.FlatAppearance.MouseOverBackColor = Color.FromArgb(128, 255, 255);
+                this.Controls.Add(sterge_button);
+            }
+
+
+            SqlConn.CloseConn();
 
         }
 
+        private void sterge_button_Click(object sender, EventArgs e)
+        {
+            if (this.MedicamenteExpirate_listbox.SelectedIndex >= 0)
+            {
+                deleteSelected();
+                this.Controls.Remove(sterge_button);
+                this.Controls.Remove(dataExpirare_label);
+                this.Size = new Size(500, 300);
+                exit_button.Location = new Point(472, 7);
+                //something is wrong here
+            }
+        }
+
+        private void deleteSelected()
+        {
+            SqlConn.OpenConn();
+            //to retrieve only number from string with number (in this case ID of the item)
+            int id = Int32.Parse(System.Text.RegularExpressions.Regex.Match(MedicamenteExpirate_listbox.SelectedItem.ToString(),@"\d+").Value);
+            string query = deleteString + " WHERE Id = @id";
+            
+            SqlCommand command = SqlConn.connection.CreateCommand();
+            command.CommandType = CommandType.Text;
+            command.CommandText = query;
+            command.Parameters.Add(new SqlParameter("@id", id));
+            command.ExecuteNonQuery();
+
+            SqlConn.CloseConn();
+
+            string calendar = Pick_monthCalendar.SelectionRange.Start.ToShortDateString();
+
+            string refreshQuery = selectName + " WHERE DataExpirarii <= CONVERT(date,'" + calendar + "',102)";
+
+            fillListbox(refreshQuery);
+
+        }
     }
+
 }
