@@ -89,8 +89,8 @@ namespace Medicamente
                 {
                     if (reader.HasRows)
                     {
-                        this.Size = new Size(500, 300);
-                        exit_button.Location = new Point(472, 7);
+                        this.Size = new Size(450, 300);
+                        exit_button.Location = new Point(425, 7);
                         this.Controls.Add(MedicamenteExpirate_listbox);
                         fillListbox(query);
                         if (MedicamenteExpirate_listbox.SelectedIndex == -1)
@@ -157,8 +157,8 @@ namespace Medicamente
                 MedicamenteExpirate_listbox.ClearSelected();
                 this.Controls.Remove(sterge_button);
                 this.Controls.Remove(dataExpirare_label);
-                this.Size = new Size(500, 300);
-                exit_button.Location = new Point(472, 7);
+                this.Size = new Size(450, 300);
+                exit_button.Location = new Point(425, 7);
             }
             else
             {
@@ -175,8 +175,8 @@ namespace Medicamente
                     dataExpirare_label.Text = "Medicamentul expira in: " + dataexp;
                 }
 
-                this.Size = new Size(600, 300);
-                exit_button.Location = new Point(580, 7);
+                this.Size = new Size(550, 300);
+                exit_button.Location = new Point(525, 7);
 
                 dataExpirare_label.Size = new Size(120, 40);
                 dataExpirare_label.Location = new Point(410, 30);
@@ -203,9 +203,8 @@ namespace Medicamente
                 deleteSelected();
                 this.Controls.Remove(sterge_button);
                 this.Controls.Remove(dataExpirare_label);
-                this.Size = new Size(500, 300);
-                exit_button.Location = new Point(472, 7);
-                //something is wrong here
+                this.Size = new Size(450, 300);
+                exit_button.Location = new Point(425, 7);//270
             }
         }
 
