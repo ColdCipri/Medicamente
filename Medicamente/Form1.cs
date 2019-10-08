@@ -179,7 +179,7 @@ namespace Medicamente
         private void Upgrade_button_Click(object sender, EventArgs e)
         {
 
-            if (Nume_textBox.Text == "" || Bucati_textBox.Text == "" || DataExpirarii_Picker.Text == "" || Tip_comboBox.SelectedIndex == -1 || SubstantaBaza_textBox.Text == "" || SubstBazaCantitate_textBox.Text == "")
+            if (Nume_textBox.Text == "" || Bucati_textBox.Text == "" || DataExpirarii_Picker.Text == "" || Tip_comboBox.SelectedIndex == -1 || SubstantaBaza_textBox.Text == "" || SubstBazaCantitate_textBox.Text == "" || Descriere_textBox.Text == "")
                 MessageBox.Show("Eroare! Cel putin un camp este gol!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
@@ -842,7 +842,7 @@ namespace Medicamente
             this.Close();
         }
 
-        //________________________________END OF Function for fill listbox________________________________________________________
+        //________________________________END OF Function for exit button________________________________________________________
 
         //________________________________Code for making app move by mouse drag___________________________________________________
 
@@ -885,8 +885,10 @@ namespace Medicamente
         }
 
 
-        //_____________________END OF Code to empty the textboxes____________________________________________
+        //_____________________END OF Code to empty the textboxes_______________________________________________
 
+
+        //________________________________Code for medicamente expirate button___________________________________
 
         private void MedicamenteExpirate_button_Click(object sender, EventArgs e)
         {
@@ -894,5 +896,6 @@ namespace Medicamente
             childForm.ShowDialog();
         }
 
+        //________________________________END of Code for medicamente expirate button_____________________________
     }
 }

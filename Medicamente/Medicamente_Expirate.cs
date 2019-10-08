@@ -43,10 +43,15 @@ namespace Medicamente
 
         //_____________________END OF Code for shadow on border____________________________________________
 
+
+        //________________________________Function for exit button________________________________________________________________
+
         private void exit_button_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
+        //________________________________END OF Function for exit button________________________________________________________
 
         //________________________________Code for making app move by mouse drag___________________________________________________
 
@@ -74,6 +79,8 @@ namespace Medicamente
 
         //_____________________END OF Code for making app move by mouse drag____________________________________________
 
+
+        //________________________________Function for MonthCalendar _____________________________________________________
 
         private void Pick_monthCalendar_DateChanged(object sender, DateRangeEventArgs e)
         {
@@ -113,12 +120,24 @@ namespace Medicamente
 
         }
 
+
+        //________________________________END of Function for MonthCalendar _____________________________________________________
+
+
+        //________________________________Function to load elements of this form _____________________________________________________
+
         private void Medicamente_Expirate_Load(object sender, EventArgs e)
         {
             MedicamenteExpirate_listbox.Name = "Medicamente Expirate";
             MedicamenteExpirate_listbox.Location = new Point(260, 25);
             MedicamenteExpirate_listbox.Size = new Size(150, 260);
         }
+
+
+        //________________________________END of Function to load elements of this form _____________________________________________________
+
+
+        //________________________________Function to fill listbox with elements _____________________________________________________
 
         private void fillListbox(string query)
         {
@@ -143,12 +162,14 @@ namespace Medicamente
             SqlConn.CloseConn();
         }
 
+        //________________________________END of Function to fill listbox with elements _____________________________________________________
+
+
+        //________________________________Function to resize the listbox and add label with data expirarii and button to delete_____________________________________________________
 
         private void MedicamenteExpirate_listbox_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-            //TO-DO    
-            //when selected index changes resize and add the delete button.
+            
             SqlConn.OpenConn();
             SqlCommand command = SqlConn.connection.CreateCommand();
             command.CommandType = CommandType.Text;
@@ -196,6 +217,13 @@ namespace Medicamente
 
         }
 
+
+        //________________________________END of Function to resize the listbox and add label with data expirarii and button to delete_____________________________________________________
+
+
+
+        //________________________________Function to call the deleteSelected method and resize back the form and remove the label and button______________________________________________
+
         private void sterge_button_Click(object sender, EventArgs e)
         {
             if (this.MedicamenteExpirate_listbox.SelectedIndex >= 0)
@@ -204,9 +232,15 @@ namespace Medicamente
                 this.Controls.Remove(sterge_button);
                 this.Controls.Remove(dataExpirare_label);
                 this.Size = new Size(450, 300);
-                exit_button.Location = new Point(425, 7);//270
+                exit_button.Location = new Point(295, 7);
             }
         }
+
+        //__________________________END of Function to call the deleteSelected method and resize back the form and remove the label and button______________________________________________
+
+
+
+        //________________________________Function to delete the element from database which is selected from listbox______________________________________________
 
         private void deleteSelected()
         {
@@ -230,6 +264,9 @@ namespace Medicamente
             fillListbox(refreshQuery);
 
         }
+
+
+        //________________________________END of Function to delete the element from database which is selected from listbox______________________________________________
     }
 
 }
